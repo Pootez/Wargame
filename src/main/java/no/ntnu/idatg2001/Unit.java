@@ -10,10 +10,10 @@ package no.ntnu.idatg2001;
 
 public abstract class Unit {
 
-    private String name;
-    private int health;
-    private int attack;
-    private int armor;
+    protected String name;
+    protected int health;
+    protected int attack;
+    protected int armor;
 
     /**
      * Constructor for unit
@@ -28,6 +28,17 @@ public abstract class Unit {
         this.health = health;
         this.attack = attack;
         this.armor = armor;
+    }
+
+    /**
+     * Constructor for subclasses of unit
+     * @param name Short descriptive name. Ex: "Archer", "Swordsman"
+     * @param health Health of unit, greater than 0
+     */
+
+    public Unit(String name, int health) {
+        this.name = name;
+        this.health = health;
     }
 
     /**
