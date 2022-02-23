@@ -2,16 +2,14 @@ package no.ntnu.idatg2001;
 
 /**
  * Cavalry unit with an attack bonus of 6-2 and resistance bonus of 1
- * Attack of 20 and armor of 12
+ * Attack of 25 and armor of 15
  *
  * @author sondesp
  * @version 0.0.1
  * @since 0.0.1
  */
 
-public class CavalryUnit extends Unit {
-
-    private int attackBonus = 10;
+public class CommanderUnit extends CavalryUnit {
 
     /**
      * @param name Short descriptive name. Ex: "Archer", "Swordsman"
@@ -20,7 +18,7 @@ public class CavalryUnit extends Unit {
      * @param armor Armor value represents the units defence
      */
 
-    public CavalryUnit(String name, int health, int attack, int armor) {
+    public CommanderUnit(String name, int health, int attack, int armor) {
         super(name, health, attack, armor);
     }
 
@@ -29,24 +27,9 @@ public class CavalryUnit extends Unit {
      * @param health Health of unit, greater than 0
      */
 
-    public CavalryUnit(String name, int health) {
+    public CommanderUnit(String name, int health) {
         super(name, health);
-        attack = 20;
-        armor = 12;
-    }
-
-    /**
-     * @return Attack bonus of 6-2
-     */
-    public int getAttackBonus() {
-        if (attackBonus > 2) {attackBonus -=4;}
-        return attackBonus;
-    }
-
-    /**
-     * @return Resistance bonus of 1
-     */
-    public int getResistBonus() {
-        return 1;
+        attack = 25;
+        armor = 15;
     }
 }

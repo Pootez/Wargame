@@ -2,6 +2,7 @@ package no.ntnu.idatg2001;
 
 /**
  * Ranged unit with an attack bonus of 3 and resistance bonus of 6-2
+ * Attack of 15 and armor of 8
  *
  * @author sondesp
  * @version 0.0.1

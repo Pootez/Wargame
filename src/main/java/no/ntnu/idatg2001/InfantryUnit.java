@@ -2,6 +2,7 @@ package no.ntnu.idatg2001;
 
 /**
  * Infantry unit with an attack bonus of 2 and resistance bonus of 1
+ * Attack of 15 and armor of 10
  *
  * @author sondesp
  * @version 0.0.1
