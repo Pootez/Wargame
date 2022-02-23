@@ -53,6 +53,7 @@ public class CavalryUnit extends Unit {
     public void attack(Unit opponent) {
         int hp = opponent.getHealth() - attack - getAttackBonus() + opponent.getArmor() + opponent.getResistBonus();
         if (attackBonus > 2) {attackBonus -= 4;}
+        opponent.attacked();
         if (hp < opponent.getHealth()) {opponent.setHealth(hp);}
     }
 }

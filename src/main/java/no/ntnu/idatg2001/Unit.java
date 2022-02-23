@@ -94,12 +94,14 @@ public abstract class Unit {
 
     public abstract int getAttackBonus();
     public abstract int getResistBonus();
+    public void attacked() {}
 
     /**
      * @param opponent Opponent to attack, whomst health is reduced
      */
     public void attack(Unit opponent) {
         int hp = opponent.getHealth() - attack - getAttackBonus() + opponent.getArmor() + opponent.getResistBonus();
+        opponent.attacked();
         if (hp < opponent.getHealth()) {opponent.setHealth(hp);}
     }
 }

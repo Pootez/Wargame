@@ -50,9 +50,7 @@ public class RangedUnit extends Unit {
     }
 
     @Override
-    public void attack(Unit opponent) {
-        int hp = opponent.getHealth() - attack - getAttackBonus() + opponent.getArmor() + opponent.getResistBonus();
+    public void attacked() {
         if (resist > 2) {resist -= 2;}
-        if (hp < opponent.getHealth()) {opponent.setHealth(hp);}
     }
 }

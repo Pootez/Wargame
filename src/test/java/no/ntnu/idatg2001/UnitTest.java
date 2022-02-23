@@ -59,18 +59,43 @@ class UnitTest {
         assertEquals(100,infantry.getHealth());
         commander.setHealth(0);
         assertEquals(0,commander.getHealth());
+        commander.setHealth(-5);
+        assertEquals(-5,commander.getHealth());
     }
 
     @Test
     void getAttackBonus() {
+        assertEquals(2,infantry.getAttackBonus());
+        assertEquals(6,cavalry.getAttackBonus());
+        assertEquals(3,ranged.getAttackBonus());
+        assertEquals(6,commander.getAttackBonus());
+        cavalry.attack(commander);
+        commander.attack(cavalry);
+        assertEquals(2,cavalry.getAttackBonus());
+        assertEquals(2,commander.getAttackBonus());
 
     }
 
     @Test
     void getResistBonus() {
+        assertEquals(1,infantry.getResistBonus());
+        assertEquals(1,cavalry.getResistBonus());
+        assertEquals(6,ranged.getResistBonus());
+        assertEquals(1,commander.getResistBonus());
+        commander.attack(ranged);
+        assertEquals(4,ranged.getResistBonus());
+        commander.attack(ranged);
+        assertEquals(2,ranged.getResistBonus());
     }
 
     @Test
     void attack() {
+        assertEquals(18,ranged.getHealth());
+        commander.attack(ranged);
+        assertEquals(4,ranged.getResistBonus());
+        assertEquals(1,ranged.getHealth());
+        commander.attack(ranged);
+        assertEquals(2,ranged.getResistBonus());
+        assertEquals(-14,ranged.getHealth());
     }
 }
