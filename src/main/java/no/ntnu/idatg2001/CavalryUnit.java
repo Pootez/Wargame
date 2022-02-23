@@ -11,7 +11,7 @@ package no.ntnu.idatg2001;
 
 public class CavalryUnit extends Unit {
 
-    private int attackBonus = 10;
+    private int attackBonus = 6;
 
     /**
      * @param name Short descriptive name. Ex: "Archer", "Swordsman"
@@ -39,7 +39,6 @@ public class CavalryUnit extends Unit {
      * @return Attack bonus of 6-2
      */
     public int getAttackBonus() {
-        if (attackBonus > 2) {attackBonus -=4;}
         return attackBonus;
     }
 
@@ -48,5 +47,12 @@ public class CavalryUnit extends Unit {
      */
     public int getResistBonus() {
         return 1;
+    }
+
+    @Override
+    public void attack(Unit opponent) {
+        int hp = opponent.getHealth() - attack - getAttackBonus() + opponent.getArmor() + opponent.getResistBonus();
+        if (attackBonus > 2) {attackBonus -= 4;}
+        if (hp < opponent.getHealth()) {opponent.setHealth(hp);}
     }
 }

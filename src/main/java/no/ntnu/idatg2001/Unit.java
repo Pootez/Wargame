@@ -39,7 +39,7 @@ public abstract class Unit {
      */
 
     public Unit(String name, int health) {
-        if (name.equals("") || health <= 0 || attack < 0 || armor < 0) {throw new IllegalArgumentException("Illegal argument for unit");}
+        if (name.equals("") || health <= 0) {throw new IllegalArgumentException("Illegal argument for unit");}
 
         this.name = name;
         this.health = health;

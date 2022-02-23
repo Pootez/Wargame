@@ -11,7 +11,7 @@ package no.ntnu.idatg2001;
 
 public class RangedUnit extends Unit {
 
-    private int resist = 8;
+    private int resist = 6;
 
     /**
      * @param name Short descriptive name. Ex: "Archer", "Swordsman"
@@ -46,7 +46,13 @@ public class RangedUnit extends Unit {
      * @return Resistance bonus of 6-2
      */
     public int getResistBonus() {
-        if (resist > 2) {resist -= 2;}
         return resist;
+    }
+
+    @Override
+    public void attack(Unit opponent) {
+        int hp = opponent.getHealth() - attack - getAttackBonus() + opponent.getArmor() + opponent.getResistBonus();
+        if (resist > 2) {resist -= 2;}
+        if (hp < opponent.getHealth()) {opponent.setHealth(hp);}
     }
 }
