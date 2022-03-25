@@ -32,7 +32,7 @@ public class Army {
      */
     public Army(String name) {
         this.name = name;
-        units = new ArrayList<Unit>();
+        units = new ArrayList<>();
     }
 
     /**
@@ -99,5 +99,53 @@ public class Army {
     @Override
     public int hashCode() {
         return Objects.hash(name, units);
+    }
+
+    /**
+     * Retrieves all infantry units from an army.
+     *
+     * @return List of infantry units in an army
+     */
+
+    public List<Unit> getInfantryUnits() {
+        List<Unit> temp = new ArrayList<>();
+        units.stream().filter(unit -> unit instanceof InfantryUnit).forEach(temp :: add);
+        return temp;
+    }
+
+    /**
+     * Retrieves all cavalry units from an army.
+     *
+     * @return List of cavalry units in an army
+     */
+
+    public List<Unit> getCavalryUnits() {
+        List<Unit> temp = new ArrayList<>();
+        units.stream().filter(unit -> unit instanceof CavalryUnit && !(unit instanceof CommanderUnit)).forEach(temp :: add);
+        return temp;
+    }
+
+    /**
+     * Retrieves all ranged units from an army.
+     *
+     * @return List of ranged units in an army
+     */
+
+    public List<Unit> getRangedUnits() {
+        List<Unit> temp = new ArrayList<>();
+        units.stream().filter(unit -> unit instanceof RangedUnit).forEach(temp :: add);
+        return temp;
+    }
+
+    /**
+     * Retrieves all commander units from an army.
+     *
+     * @return List of commander units in an army
+     */
+
+    public List<Unit> getCommanderUnits() {
+        List<Unit> temp = new ArrayList<>();
+        units.stream().filter(unit -> unit instanceof CommanderUnit).forEach(temp :: add);
+        return temp;
     }
 }
