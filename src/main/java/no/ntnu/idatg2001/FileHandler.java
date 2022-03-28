@@ -28,12 +28,7 @@ public class FileHandler {
             writer.write(army.getName() + "\n");
             if (!army.getUnits().isEmpty()) {
                 for (Unit unit : army.getUnits()) {
-                    String subclass = unit instanceof CommanderUnit ? "CommanderUnit" :
-                            unit instanceof InfantryUnit ? "InfantryUnit" :
-                            unit instanceof CavalryUnit ? "CavalryUnit" :
-                            unit instanceof RangedUnit ? "RangedUnit" : null;
-
-                    writer.write(subclass + "," + unit.getName() + "," + unit.getHealth() + "\n");
+                    writer.write(unit.getClass().getSimpleName() + "," + unit.getName() + "," + unit.getHealth() + "\n");
                 }
             }
         } catch (IOException e) {
