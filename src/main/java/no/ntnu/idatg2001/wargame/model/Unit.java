@@ -4,8 +4,8 @@ package no.ntnu.idatg2001.wargame.model;
  * Superclass for units, given their name and statistics.
  *
  * @author sondesp
- * @version 0.0.1
- * @since 0.0.1
+ * @version 2022-05-19
+ * @since 2022-02-22
  */
 
 public abstract class Unit {

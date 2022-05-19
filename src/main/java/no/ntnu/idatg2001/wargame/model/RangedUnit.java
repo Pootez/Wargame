@@ -5,8 +5,8 @@ package no.ntnu.idatg2001.wargame.model;
  * Attack of 15 and armor of 8
  *
  * @author sondesp
- * @version 0.0.1
- * @since 0.0.1
+ * @version 2022-02-23
+ * @since 2022-02-22
  */
 
 public class RangedUnit extends Unit {

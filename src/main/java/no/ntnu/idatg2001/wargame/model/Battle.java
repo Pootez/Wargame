@@ -4,8 +4,8 @@ package no.ntnu.idatg2001.wargame.model;
  * Class that contains and simulates a battle between two armies.
  *
  * @author sondesp
- * @version 0.0.1
- * @since 0.0.1
+ * @version 2022-02-24
+ * @since 2022-02-24
  */
 
 public class Battle {

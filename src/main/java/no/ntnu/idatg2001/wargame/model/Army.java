@@ -8,8 +8,8 @@ import java.util.Objects;
  * Class representing an army of units.
  *
  * @author sondesp
- * @version 0.0.1
- * @since 0.0.1
+ * @version 2022-03-25
+ * @since 2022-02-24
  */
 
 public class Army {
