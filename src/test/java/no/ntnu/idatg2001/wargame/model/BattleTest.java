@@ -27,7 +27,7 @@ class BattleTest {
         
         armyTwo.addUnit(new InfantryUnit("Jeremy from accounting",20));
 
-        armyThree.addUnit(new InfantryUnit("Greg, the General Store Manager",20));
+        armyThree.addUnit(new InfantryUnit("Greg - the General Store Manager",20));
     }
 
     @Test

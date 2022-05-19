@@ -32,7 +32,7 @@ class ArmyTest {
         army.addUnit(new CavalryUnit("Swordsman",40));
 
         army.addUnit(new InfantryUnit("Jeremy from accounting",20));
-        army.addUnit(new InfantryUnit("Greg, the General Store Manager",20));
+        army.addUnit(new InfantryUnit("Greg - the General Store Manager",20));
     }
 
     @Test
