@@ -2,9 +2,12 @@ package no.ntnu.idatg2001.wargame.model;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class with static methods for handling army related csv files.
@@ -63,5 +66,27 @@ public class FileHandler {
             e.printStackTrace();
         }
         return army;
+    }
+
+    /**
+     * Returns all .csv files within a folder as a list of armies.
+     *
+     * @param path Path of folder
+     * @return List of armies
+     */
+
+    public static List<Army> readArmies(String path) {
+        ArrayList<Army> armies = new ArrayList<>();
+        File f = new File(path);
+        String[] pathnames = f.list();
+
+        if (pathnames != null) {
+            for (String pathname : pathnames) {
+                if (pathname.contains(".csv")) {
+                    armies.add(readArmyCSV(pathname));
+                }
+            }
+        }
+        return armies;
     }
 }
