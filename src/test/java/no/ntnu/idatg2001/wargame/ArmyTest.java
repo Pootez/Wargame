@@ -1,5 +1,6 @@
-package no.ntnu.idatg2001;
+package no.ntnu.idatg2001.wargame;
 
+import no.ntnu.idatg2001.wargame.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

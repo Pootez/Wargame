@@ -1,4 +1,4 @@
-package no.ntnu.idatg2001;
+package no.ntnu.idatg2001.wargame;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

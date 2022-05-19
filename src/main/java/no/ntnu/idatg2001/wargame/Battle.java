@@ -1,4 +1,4 @@
-package no.ntnu.idatg2001;
+package no.ntnu.idatg2001.wargame;
 
 /**
  * Class that contains and simulates a battle between two armies.
