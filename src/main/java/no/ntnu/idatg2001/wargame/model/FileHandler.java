@@ -83,7 +83,7 @@ public class FileHandler {
         if (pathnames != null) {
             for (String pathname : pathnames) {
                 if (pathname.contains(".csv")) {
-                    armies.add(readArmyCSV(pathname));
+                    armies.add(readArmyCSV(path + "/" + pathname));
                 }
             }
         }
