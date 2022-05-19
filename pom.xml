@@ -101,7 +101,6 @@
                             <transformers>
                                 <transformer implementation=
                                                      "org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <!-- TODO: Add your main-class here, with full package prefix. From the example above: the MyJavaFXApplicationMain-class -->
                                     <mainClass>no.ntnu.idatg2001.wargame.Main</mainClass>
                                 </transformer>
                             </transformers>
