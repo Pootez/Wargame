@@ -1,4 +1,4 @@
-package no.ntnu.idatg2001.wargame;
+package no.ntnu.idatg2001.wargame.model;
 
 /**
  * Cavalry unit with an attack bonus of 6-2 and resistance bonus of 1

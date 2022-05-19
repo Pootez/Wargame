@@ -1,4 +1,4 @@
-package no.ntnu.idatg2001.wargame;
+package no.ntnu.idatg2001.wargame.model;
 
 /**
  * Superclass for units, given their name and statistics.

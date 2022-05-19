@@ -1,4 +1,4 @@
-package no.ntnu.idatg2001.wargame;
+package no.ntnu.idatg2001.wargame.model;
 
 import java.util.List;
 import java.util.ArrayList;

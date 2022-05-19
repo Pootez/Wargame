@@ -1,6 +1,6 @@
-package no.ntnu.idatg2001.wargame;
+package no.ntnu.idatg2001.wargame.model;
 
-import no.ntnu.idatg2001.wargame.*;
+import no.ntnu.idatg2001.wargame.model.*;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
