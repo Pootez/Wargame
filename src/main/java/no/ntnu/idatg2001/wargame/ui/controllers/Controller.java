@@ -12,11 +12,19 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the application.
+ */
+
 public class Controller implements Initializable {
 
     private Battle battle;
     private String saveDir;
     private List<Army> armies;
+
+    /**
+     * Constructor for the controller. Initializes variables.
+     */
 
     public Controller() {
         battle = new Battle(new Army("temp1"), new Army("temp2"));
@@ -30,11 +38,21 @@ public class Controller implements Initializable {
 
     }
 
+    /**
+     * Returns an observable list of the available armies' names under {Home}/Documents/WargameArmies
+     *
+     * @return ObservableList of strings representing the current available armies.
+     */
+
     public ObservableList<String> getArmiesObservableList() {
         readArmies();
         ObservableList<String> observableList = FXCollections.observableArrayList(armies.stream().map(Army :: getName).toList());
         return observableList;
     }
+
+    /**
+     * Updates armies property of the application.
+     */
 
     private void readArmies() {
         armies = FileHandler.readArmies(saveDir);

@@ -16,13 +16,33 @@ import no.ntnu.idatg2001.wargame.ui.controllers.Controller;
 
 import java.io.IOException;
 
+/**
+ * Main Window for simulating a battle.
+ *
+ * @author sondesp
+ * @version 2022-02-20
+ * @since 2022-05-19
+ */
+
 public class MainWindow extends Application {
 
     private Controller controller;
 
+    /**
+     * Container for main.
+     *
+     * @param args Arguments
+     */
+
     public static void main(String[] args) {
         launch(args);
     }
+
+    /**
+     * Starts the application.
+     *
+     * @param primaryStage Primary Stage for the Application
+     */
 
     @Override
     public void start(Stage primaryStage) throws IOException {
