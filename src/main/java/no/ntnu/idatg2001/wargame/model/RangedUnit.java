@@ -19,7 +19,6 @@ public class RangedUnit extends Unit {
      * @param attack Attack value represents the weapons damage
      * @param armor Armor value represents the units defence
      */
-
     public RangedUnit(String name, int health, int attack, int armor) {
         super(name, health, attack, armor);
     }
@@ -28,7 +27,6 @@ public class RangedUnit extends Unit {
      * @param name Short descriptive name. Ex: "Archer", "Swordsman"
      * @param health Health of unit, greater than 0
      */
-
     public RangedUnit(String name, int health) {
         super(name, health);
         attack = 15;

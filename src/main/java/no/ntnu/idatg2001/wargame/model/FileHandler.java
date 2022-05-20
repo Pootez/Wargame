@@ -25,7 +25,6 @@ public class FileHandler {
      * @param army Army to be serialized
      * @param file File path
      */
-
     public static void writeArmyCSV(Army army, String file) {
         try (BufferedWriter writer = Files.newBufferedWriter(Path.of(file))) {
             writer.write(army.getName() + "\n");
@@ -45,7 +44,6 @@ public class FileHandler {
      * @param file File path
      * @return Army with units
      */
-
     public static Army readArmyCSV(String file) {
         Army army = null;
         try (BufferedReader reader = Files.newBufferedReader(Path.of(file))) {
@@ -74,7 +72,6 @@ public class FileHandler {
      * @param path Path of folder
      * @return List of armies
      */
-
     public static List<Army> readArmies(String path) {
         ArrayList<Army> armies = new ArrayList<>();
         File f = new File(path);

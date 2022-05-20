@@ -22,7 +22,6 @@ public class UnitFactory {
      * @param health health point of unit
      * @return List of units
      */
-
     public List<Unit> createUnits(int n, String type, String name, int health) {
         if (name.contains(",")) {throw new IllegalArgumentException("Unit name cannot contain ','");}
         if (n <= 0) {throw new IllegalArgumentException("number of units must be greater than 0");}
@@ -42,7 +41,6 @@ public class UnitFactory {
      * @param health health point of unit
      * @return Single Unit
      */
-
     public Unit createUnit(String type, String name, int health) {
         if (name.contains(",")) {throw new IllegalArgumentException("Unit name cannot contain ','");}
         return switch (type) {

@@ -17,7 +17,6 @@ public class InfantryUnit extends Unit {
      * @param attack Attack value represents the weapons damage
      * @param armor Armor value represents the units defence
      */
-
     public InfantryUnit(String name, int health, int attack, int armor) {
         super(name, health, attack, armor);
     }
@@ -26,13 +25,11 @@ public class InfantryUnit extends Unit {
      * @param name Short descriptive name. Ex: "Archer", "Swordsman"
      * @param health Health of unit, greater than 0
      */
-
     public InfantryUnit(String name, int health) {
         super(name, health);
         attack = 15;
         armor = 10;
     }
-
     /**
      * @return Attack bonus of 2
      */

@@ -29,7 +29,6 @@ public class Controller implements Initializable {
     /**
      * Constructor for the controller. Initializes variables.
      */
-
     public Controller() {
         battle = new Battle(new Army("temp1"), new Army("temp2"));
         saveDir = System.getProperty("user.home").replaceAll("\\\\", "/") + "/Documents/WargameArmies";
@@ -47,7 +46,6 @@ public class Controller implements Initializable {
      *
      * @return ObservableList of strings representing the current available armies.
      */
-
     public ObservableList<String> getArmiesObservableList() {
         readArmies();
         ObservableList<String> observableList = FXCollections.observableArrayList(armies.stream().map(Army :: getName).toList());
@@ -57,7 +55,6 @@ public class Controller implements Initializable {
     /**
      * Updates armies property of the application.
      */
-
     private void readArmies() {
         armies = FileHandler.readArmies(saveDir);
     }

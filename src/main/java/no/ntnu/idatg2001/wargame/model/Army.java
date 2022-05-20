@@ -21,7 +21,6 @@ public class Army {
      * @param name Name of army
      * @param units List of units
      */
-
     public Army(String name, List<Unit> units) {
         this.name = name;
         this.units = units;
@@ -80,6 +79,10 @@ public class Army {
      */
     public boolean hasUnits() {return !units.isEmpty();}
 
+    /**
+     * Returns the army's information as a string.
+     * @return String of the army
+     */
     @Override
     public String toString() {
         return "Army{" +

@@ -38,7 +38,6 @@ public abstract class Unit {
      * @param name Short descriptive name. Ex: "Archer", "Swordsman"
      * @param health Health of unit, greater than 0
      */
-
     public Unit(String name, int health) {
         if (name.equals("") || health <= 0) {throw new IllegalArgumentException("Illegal argument for unit");}
         if (name.contains(",")) {throw new IllegalArgumentException("Unit name cannot contain ','");}

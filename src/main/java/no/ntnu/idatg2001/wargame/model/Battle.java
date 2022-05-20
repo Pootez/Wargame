@@ -48,6 +48,10 @@ public class Battle {
         return winner;
     }
 
+    /**
+     * Returns the battle info as a string.
+     * @return String of the two armies
+     */
     @Override
     public String toString() {
         return "Battle{" +

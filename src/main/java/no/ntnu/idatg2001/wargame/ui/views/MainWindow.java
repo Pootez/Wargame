@@ -33,7 +33,6 @@ public class MainWindow extends Application {
      *
      * @param args Arguments
      */
-
     public static void main(String[] args) {
         launch(args);
     }
@@ -43,7 +42,6 @@ public class MainWindow extends Application {
      *
      * @param primaryStage Primary Stage for the Application
      */
-
     @Override
     public void start(Stage primaryStage) throws IOException {
         controller = new Controller();
