@@ -4,11 +4,14 @@ import no.ntnu.idatg2001.wargame.ui.views.MainWindow;
 
 /**
  * Class for containing main and starting application. Useful in packaging.
+ *
+ * @author sondesp
+ * @version 2022-02-20
+ * @since 2022-05-19
  */
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Main initialized...");
         MainWindow.main(args);
     }
 }

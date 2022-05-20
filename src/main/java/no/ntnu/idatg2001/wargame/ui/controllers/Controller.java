@@ -14,13 +14,17 @@ import java.util.ResourceBundle;
 
 /**
  * Controller for the application.
+ *
+ * @author sondesp
+ * @version 2022-02-20
+ * @since 2022-05-19
  */
 
 public class Controller implements Initializable {
 
-    private Battle battle;
-    private String saveDir;
-    private List<Army> armies;
+    private Battle battle; // Battle for simulation, initializes with empty armies named "temp1" and "temp2"
+    private String saveDir; // String to {HOME}/Documents/WargameArmies
+    private List<Army> armies; // List of available armies
 
     /**
      * Constructor for the controller. Initializes variables.
@@ -39,7 +43,7 @@ public class Controller implements Initializable {
     }
 
     /**
-     * Returns an observable list of the available armies' names under {Home}/Documents/WargameArmies
+     * Returns an observable list of the available armies' names under {HOME}/Documents/WargameArmies
      *
      * @return ObservableList of strings representing the current available armies.
      */
