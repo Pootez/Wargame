@@ -4,12 +4,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ListView;
 import no.ntnu.idatg2001.wargame.model.Army;
 import no.ntnu.idatg2001.wargame.model.Battle;
 import no.ntnu.idatg2001.wargame.model.FileHandler;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -27,7 +29,9 @@ public class Controller implements Initializable {
     private static Battle battle; // Battle for simulation, initializes with empty armies named "temp1" and "temp2"
     private static String saveDir; // String to {HOME}/Documents/WargameArmies
     private static List<Army> armies; // List of available armies
+
     private static GraphicsContext gc;
+    private static List<ListView> mainListViews;
 
     /**
      * Constructor for the controller. Initializes variables.
@@ -79,5 +83,21 @@ public class Controller implements Initializable {
             battle.setArmyTwo(temp);
         }
         else {throw new IllegalArgumentException("Invalid army number");}
+    }
+
+    public void updateMainListViews() {
+        for (ListView list : mainListViews) {
+            list.itemsProperty().set(getArmiesObservableList());
+        }
+    }
+
+    public static void setGc(GraphicsContext gc) {
+        Controller.gc = gc;
+    }
+
+    public void setMainListViews(ListView leftList, ListView rightList) {
+        mainListViews = new ArrayList<>();
+        mainListViews.add(leftList);
+        mainListViews.add(rightList);
     }
 }

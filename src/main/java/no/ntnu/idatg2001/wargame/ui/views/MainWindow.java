@@ -83,6 +83,9 @@ public class MainWindow extends Application {
             }
         });
 
+        // Add to controller for updates.
+        controller.setMainListViews(leftList, rightList);
+
         // Add children to VBoxes
         leftList.setPrefWidth(150);
         leftVBox.getChildren().addAll(leftLabel,leftList);
