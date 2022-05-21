@@ -4,14 +4,18 @@ import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Box;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import no.ntnu.idatg2001.wargame.ui.controllers.Controller;
@@ -103,6 +107,29 @@ public class MainWindow extends Application {
         vBox.setAlignment(Pos.TOP_CENTER);
         vBox.minWidth(700);
         borderPane.setCenter(vBox);
+
+        // VBox to hold pre-battle elements
+        VBox preGameVbox = new VBox();
+        preGameVbox.setAlignment(Pos.TOP_CENTER);
+        preGameVbox.setSpacing(5);
+
+        Slider speedSlider = new Slider(0,100,50);
+        Label speedLabel = new Label("Speed: " + String.valueOf(speedSlider.valueProperty().getValue().intValue()));
+        speedLabel.setFont(Font.font(10));
+
+        speedSlider.valueProperty().addListener(new ChangeListener<Number>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+                speedLabel.textProperty().setValue("Speed: " + String.valueOf(newValue.intValue()));
+            }
+        });
+
+        Button simulateBtn = new Button("Simulate");
+        simulateBtn.setPadding(new Insets(5,30,5,30));
+
+        preGameVbox.getChildren().addAll(speedLabel,speedSlider,simulateBtn);
+        vBox.getChildren().add(preGameVbox);
 
         // Create a scene for primaryStage and assign stylesheet
         Scene scene = new Scene(borderPane);
