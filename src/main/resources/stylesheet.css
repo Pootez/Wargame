@@ -29,6 +29,9 @@
     -fx-selection-bar-non-focused: rgb(50, 50, 50);
 
     -fx-font: 14px Tahoma;
+
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
 }
 
 /* Fix derived prompt color for text fields */
