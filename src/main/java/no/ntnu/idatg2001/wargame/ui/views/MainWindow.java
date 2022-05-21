@@ -15,7 +15,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Box;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import no.ntnu.idatg2001.wargame.ui.controllers.Controller;
@@ -137,6 +136,7 @@ public class MainWindow extends Application {
         // Create a scene for primaryStage and assign stylesheet
         Scene scene = new Scene(borderPane);
         scene.getStylesheets().add(this.getClass().getResource("/stylesheet.css").toExternalForm());
+        primaryStage.minWidthProperty().setValue(700);
         primaryStage.setScene(scene);
 
         // Set title
