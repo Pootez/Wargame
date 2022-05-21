@@ -59,4 +59,20 @@ public class Battle {
                 ", armyTwo=" + armyTwo +
                 '}';
     }
+
+    public Army getArmyOne() {
+        return armyOne;
+    }
+
+    public void setArmyOne(Army armyOne) {
+        this.armyOne = armyOne;
+    }
+
+    public Army getArmyTwo() {
+        return armyTwo;
+    }
+
+    public void setArmyTwo(Army armyTwo) {
+        this.armyTwo = armyTwo;
+    }
 }
