@@ -11,6 +11,12 @@ import no.ntnu.idatg2001.wargame.ui.views.MainWindow;
  */
 
 public class Main {
+
+    /**
+     * Starts the program.
+     *
+     * @param args Arguments
+     */
     public static void main(String[] args) {
         MainWindow.main(args);
     }

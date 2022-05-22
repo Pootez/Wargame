@@ -8,8 +8,19 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import no.ntnu.idatg2001.wargame.ui.controllers.Controller;
 
+/**
+ * BorderPane for displaying and opening saved armies.
+ *
+ * @author sondesp
+ * @version 2022-05-23
+ * @since 2022-05-23
+ */
+
 public class ArmiesPane extends BorderPane {
 
+    /**
+     * ArmiesPane constructor.
+     */
     public ArmiesPane () {
 
         // Create top buttons

@@ -11,13 +11,13 @@ import java.io.IOException;
  * Main Window for simulating a battle.
  *
  * @author sondesp
- * @version 2022-02-22
+ * @version 2022-02-23
  * @since 2022-05-19
  */
 
 public class MainWindow extends Application {
 
-    private Controller controller;
+    private Controller controller; // Mainly for initialization of the controller
 
     /**
      * Container for main.
@@ -35,6 +35,7 @@ public class MainWindow extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws IOException {
+        // Initialize controller
         controller = new Controller();
 
         // Create a scene for primaryStage and assign stylesheet

@@ -1,3 +1,7 @@
+/**
+ * Module information for maven.
+ */
+
 module no.ntnu.idatg2001 {
     requires javafx.controls;
     requires javafx.fxml;

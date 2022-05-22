@@ -15,8 +15,19 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import no.ntnu.idatg2001.wargame.ui.controllers.Controller;
 
+/**
+ * BorderPane for displaying and simulating a battle.
+ *
+ * @author sondesp
+ * @version 2022-05-23
+ * @since 2022-05-23
+ */
+
 public class BattlePane extends BorderPane {
 
+    /**
+     * BattlePane constructor.
+     */
     public BattlePane () {
 
         // Create a VBoxes to display available armies

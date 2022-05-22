@@ -2,7 +2,6 @@ package no.ntnu.idatg2001.wargame.ui.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ListView;
@@ -16,17 +15,15 @@ import no.ntnu.idatg2001.wargame.ui.views.ArmiesPane;
 import no.ntnu.idatg2001.wargame.ui.views.BattlePane;
 
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.ResourceBundle;
 
 /**
  * Controller for the application.
  *
  * @author sondesp
- * @version 2022-02-22
+ * @version 2022-05-23
  * @since 2022-05-19
  */
 
@@ -104,12 +101,18 @@ public class Controller {
         drawPreBattle();
     }
 
+    /**
+     * Updates the list of selectable armies in the battle pane.
+     */
     public static void updateMainListViews() {
         for (ListView list : mainListViews) {
             list.itemsProperty().set(getArmiesObservableList());
         }
     }
 
+    /**
+     * Draw pre-battle information to the canvas in battle pane.
+     */
     public static void drawPreBattle() {
         gc.setFill(Color.BLACK);
         gc.fillRect(0,0,400,300);
@@ -122,16 +125,34 @@ public class Controller {
         gc.fillText(battle.getArmyTwo().getName(),200,225);
     }
 
+    /**
+     * Sets the graphical context, used to update canvas.
+     *
+     * @param gc GraphicalContext of the battle canvas.
+     */
     public static void setGc(GraphicsContext gc) {
         Controller.gc = gc;
     }
 
+    /**
+     * Adds the listviews of the battle pane to the controller for observer functionality.
+     * Used later with updateMainListViews
+     *
+     * @param leftList ListView
+     * @param rightList ListView
+     */
     public static void setMainListViews(ListView leftList, ListView rightList) {
         mainListViews = new ArrayList<>();
         mainListViews.add(leftList);
         mainListViews.add(rightList);
     }
 
+    /**
+     * Adds the scene from the main window to the controller.
+     * Used to update the pane with the viewArmies and armiesBack buttons.
+     *
+     * @param newScene Scene
+     */
     public static void setScene(Scene newScene) {
         scene = newScene;
     }
