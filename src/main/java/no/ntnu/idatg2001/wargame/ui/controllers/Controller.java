@@ -109,7 +109,6 @@ public class Controller implements Initializable {
         gc.fillText(battle.getArmyTwo().getName(),200,225);
     }
 
-
     public static void setGc(GraphicsContext gc) {
         Controller.gc = gc;
     }
