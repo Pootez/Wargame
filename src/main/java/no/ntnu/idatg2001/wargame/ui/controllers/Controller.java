@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
@@ -33,6 +34,7 @@ public class Controller implements Initializable {
     private static String saveDir; // String to {HOME}/Documents/WargameArmies
     private static List<Army> armies; // List of available armies
 
+    private static StackPane mainStackPane;
     private static GraphicsContext gc;
     private static List<ListView> mainListViews;
 
@@ -55,7 +57,7 @@ public class Controller implements Initializable {
      *
      * @return ObservableList of strings representing the current available armies.
      */
-    public ObservableList<String> getArmiesObservableList() {
+    public static ObservableList<String> getArmiesObservableList() {
         File f = new File(saveDir);
         List<String> pathnames = Arrays.stream(f.list()).map(obj -> obj.substring(0, obj.length() - 4)).toList();
 
@@ -66,7 +68,7 @@ public class Controller implements Initializable {
     /**
      * Updates armies property of the application.
      */
-    private void readArmies() {
+    private static void readArmies() {
         armies = FileHandler.readArmies(saveDir);
     }
 
@@ -76,7 +78,7 @@ public class Controller implements Initializable {
      * @param armyNum int for which army property within battle, 1/2
      * @param fileName filename without ".csv"
      */
-    public void selectBattleArmy (int armyNum, String fileName) {
+    public static void selectBattleArmy (int armyNum, String fileName) {
         Army temp = FileHandler.readArmyCSV(saveDir + "/" + fileName + ".csv");
 
         if (armyNum == 1) {
@@ -89,13 +91,13 @@ public class Controller implements Initializable {
         drawPreBattle();
     }
 
-    public void updateMainListViews() {
+    public static void updateMainListViews() {
         for (ListView list : mainListViews) {
             list.itemsProperty().set(getArmiesObservableList());
         }
     }
 
-    public void drawPreBattle() {
+    public static void drawPreBattle() {
         gc.setFill(Color.BLACK);
         gc.fillRect(0,0,400,300);
 
@@ -107,13 +109,18 @@ public class Controller implements Initializable {
         gc.fillText(battle.getArmyTwo().getName(),200,225);
     }
 
+
     public static void setGc(GraphicsContext gc) {
         Controller.gc = gc;
     }
 
-    public void setMainListViews(ListView leftList, ListView rightList) {
+    public static void setMainListViews(ListView leftList, ListView rightList) {
         mainListViews = new ArrayList<>();
         mainListViews.add(leftList);
         mainListViews.add(rightList);
+    }
+
+    public static void setMainStackPane(StackPane stackPane) {
+        mainStackPane = stackPane;
     }
 }
