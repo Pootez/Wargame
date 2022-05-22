@@ -101,7 +101,8 @@ public class MainWindow extends Application {
         // Create a canvas to hold visuals
         Canvas canvas = new Canvas(400,300);
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        controller.setGc(gc);
+        controller.drawPreBattle();
 
         // Create Center VBox
         VBox vBox = new VBox();

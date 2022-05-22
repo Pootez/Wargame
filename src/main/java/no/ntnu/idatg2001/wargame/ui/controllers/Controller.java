@@ -5,6 +5,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ListView;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import no.ntnu.idatg2001.wargame.model.Army;
 import no.ntnu.idatg2001.wargame.model.Battle;
 import no.ntnu.idatg2001.wargame.model.FileHandler;
@@ -37,7 +40,7 @@ public class Controller implements Initializable {
      * Constructor for the controller. Initializes variables.
      */
     public Controller() {
-        battle = new Battle(new Army("temp1"), new Army("temp2"));
+        battle = new Battle(new Army(""), new Army(""));
         saveDir = System.getProperty("user.home").replaceAll("\\\\", "/") + "/Documents/WargameArmies";
         File folder = new File(saveDir);
         if (!folder.exists()) {folder.mkdir();}
@@ -83,12 +86,25 @@ public class Controller implements Initializable {
             battle.setArmyTwo(temp);
         }
         else {throw new IllegalArgumentException("Invalid army number");}
+        drawPreBattle();
     }
 
     public void updateMainListViews() {
         for (ListView list : mainListViews) {
             list.itemsProperty().set(getArmiesObservableList());
         }
+    }
+
+    public void drawPreBattle() {
+        gc.setFill(Color.BLACK);
+        gc.fillRect(0,0,400,300);
+
+        gc.setFill(Color.WHITE);
+        gc.setFont(Font.font("Tahoma",40));
+        gc.setTextAlign(TextAlignment.CENTER);
+        gc.fillText(battle.getArmyOne().getName(),200,75);
+        gc.fillText("vs",200,150);
+        gc.fillText(battle.getArmyTwo().getName(),200,225);
     }
 
     public static void setGc(GraphicsContext gc) {
