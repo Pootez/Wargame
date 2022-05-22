@@ -1,20 +1,19 @@
 package no.ntnu.idatg2001.wargame.ui.controllers;
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import no.ntnu.idatg2001.wargame.model.Army;
 import no.ntnu.idatg2001.wargame.model.Battle;
 import no.ntnu.idatg2001.wargame.model.FileHandler;
+import no.ntnu.idatg2001.wargame.ui.views.ArmiesPane;
+import no.ntnu.idatg2001.wargame.ui.views.BattlePane;
 
 import java.io.File;
 import java.net.URL;
@@ -27,7 +26,7 @@ import java.util.ResourceBundle;
  * Controller for the application.
  *
  * @author sondesp
- * @version 2022-02-20
+ * @version 2022-02-22
  * @since 2022-05-19
  */
 
@@ -37,7 +36,7 @@ public class Controller implements Initializable {
     private static String saveDir; // String to {HOME}/Documents/WargameArmies
     private static List<Army> armies; // List of available armies
 
-    private static StackPane mainStackPane;
+    private static Scene scene;
     private static GraphicsContext gc;
     private static List<ListView> mainListViews;
 
@@ -52,11 +51,12 @@ public class Controller implements Initializable {
         readArmies();
     }
 
-    public static void exitBtnPress() {
-        Platform.exit();
+    public static void viewArmiesBtnPress() {
+        scene.setRoot(new ArmiesPane());
     }
 
-    public static void viewArmiesBtnPress() {
+    public static void armiesBackBtn() {
+        scene.setRoot(new BattlePane());
     }
 
     @Override
@@ -129,7 +129,7 @@ public class Controller implements Initializable {
         mainListViews.add(rightList);
     }
 
-    public static void setMainStackPane(StackPane stackPane) {
-        mainStackPane = stackPane;
+    public static void setScene(Scene newScene) {
+        scene = newScene;
     }
 }

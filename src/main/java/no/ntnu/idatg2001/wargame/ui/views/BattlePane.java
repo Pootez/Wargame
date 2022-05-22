@@ -1,9 +1,9 @@
 package no.ntnu.idatg2001.wargame.ui.views;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
@@ -11,7 +11,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import no.ntnu.idatg2001.wargame.ui.controllers.Controller;
@@ -96,7 +95,7 @@ public class BattlePane extends BorderPane {
 
         // Create top buttons
         Button exitBtn = new Button("Exit");
-        exitBtn.setOnAction(actionEvent -> Controller.exitBtnPress());
+        exitBtn.setOnAction(actionEvent -> Platform.exit());
         exitBtn.setFont(Font.font(20));
         exitBtn.setPadding(new Insets(5,30,5,30));
 
