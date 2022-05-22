@@ -30,7 +30,7 @@ import java.util.ResourceBundle;
  * @since 2022-05-19
  */
 
-public class Controller implements Initializable {
+public class Controller {
 
     private static Battle battle; // Battle for simulation, initializes with empty armies named "temp1" and "temp2"
     private static String saveDir; // String to {HOME}/Documents/WargameArmies
@@ -51,16 +51,19 @@ public class Controller implements Initializable {
         readArmies();
     }
 
+    /**
+     * Button to switch from battle pane to armies pane.
+     */
     public static void viewArmiesBtnPress() {
         scene.setRoot(new ArmiesPane());
     }
 
+    /**
+     * Button to switch from armies pane to battle pane.
+     */
     public static void armiesBackBtn() {
         scene.setRoot(new BattlePane());
     }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {}
 
     /**
      * Returns an observable list of the available armies' names under {HOME}/Documents/WargameArmies
