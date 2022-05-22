@@ -3,15 +3,15 @@ package no.ntnu.idatg2001.wargame.ui.views;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import no.ntnu.idatg2001.wargame.ui.controllers.Controller;
@@ -93,6 +93,22 @@ public class BattlePane extends BorderPane {
                 speedLabel.textProperty().setValue("Speed: " + String.valueOf(newValue.intValue()));
             }
         });
+
+        // Create top buttons
+        Button exitBtn = new Button("Exit");
+        exitBtn.setOnAction(actionEvent -> Controller.exitBtnPress());
+        exitBtn.setFont(Font.font(20));
+        exitBtn.setPadding(new Insets(5,30,5,30));
+
+        Button viewArmies = new Button("View Armies");
+        viewArmies.setOnAction(actionEvent -> Controller.viewArmiesBtnPress());
+        viewArmies.setFont(Font.font(20));
+        viewArmies.setPadding(new Insets(5,30,5,30));
+
+        HBox buttonBar = new HBox();
+        buttonBar.setAlignment(Pos.CENTER);
+        buttonBar.getChildren().addAll(exitBtn, viewArmies);
+        this.setTop(buttonBar);
 
         Button simulateBtn = new Button("Simulate");
         simulateBtn.setPadding(new Insets(5,30,5,30));

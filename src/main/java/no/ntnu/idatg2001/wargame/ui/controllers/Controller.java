@@ -1,7 +1,10 @@
 package no.ntnu.idatg2001.wargame.ui.controllers;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ListView;
@@ -47,6 +50,13 @@ public class Controller implements Initializable {
         File folder = new File(saveDir);
         if (!folder.exists()) {folder.mkdir();}
         readArmies();
+    }
+
+    public static void exitBtnPress() {
+        Platform.exit();
+    }
+
+    public static void viewArmiesBtnPress() {
     }
 
     @Override
