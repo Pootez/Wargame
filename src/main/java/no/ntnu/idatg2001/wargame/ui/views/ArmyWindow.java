@@ -1,20 +1,28 @@
 package no.ntnu.idatg2001.wargame.ui.views;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.util.Callback;
 import no.ntnu.idatg2001.wargame.model.*;
 import no.ntnu.idatg2001.wargame.ui.controllers.Controller;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -146,7 +154,111 @@ public class ArmyWindow extends Application {
         }
 
         private void addUnits() {
-            //TODO Add dialog
+            Dialog<List<Unit>> dialog = new Dialog<>();
+            dialog.setTitle("Add Units");
+            dialog.setHeaderText("Please fill out the fields below.\n',' may not be used.");
+            Label labelType = new Label("Type: ");
+            Label labelName = new Label("Name: ");
+            Label labelHp = new Label("Health: ");
+            Label labelAmount = new Label("Amount: ");
+
+            ChoiceBox<String> inputType = new ChoiceBox<>();
+            inputType.getItems().addAll("Cavalry", "Infantry", "Ranged", "Commander");
+            inputType.getSelectionModel().select(0);
+            TextField inputName = new TextField();
+            TextField inputHp = new TextField();
+            inputHp.textProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                    String newValue) {
+                    if (!newValue.matches("\\d*")) {
+                        inputHp.setText(newValue.replaceAll("[^\\d]", ""));
+                    }
+                }
+            });
+            TextField inputAmount = new TextField();
+            inputAmount.textProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                    String newValue) {
+                    if (!newValue.matches("\\d*")) {
+                        inputAmount.setText(newValue.replaceAll("[^\\d]", ""));
+                    }
+                }
+            });
+
+            GridPane grid = new GridPane();
+            grid.add(labelType, 1, 1);
+            grid.add(labelName, 1, 2);
+            grid.add(labelHp, 1, 3);
+            grid.add(labelAmount, 1, 4);
+
+            grid.add(inputType, 2, 1);
+            grid.add(inputName, 2, 2);
+            grid.add(inputHp, 2, 3);
+            grid.add(inputAmount, 2, 4);
+
+            dialog.getDialogPane().setContent(grid);
+
+            ButtonType buttonTypeOk = new ButtonType("Okay", ButtonBar.ButtonData.OK_DONE);
+            dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
+
+            dialog.setResultConverter(new Callback<ButtonType, List<Unit>>() {
+                @Override
+                public List<Unit> call(ButtonType b) {
+                    if (b == buttonTypeOk) {
+                        String response = "";
+                        if (inputName.getText().equals("")) {
+                            response += "A unit name is necessary.\n";
+                        }
+                        if (inputName.getText().contains(",")) {
+                            response += "A unit name may not contain a ','.\n";
+                        }
+                        try {
+                            int hp = Integer.parseInt(inputHp.getText());
+                            if (hp <= 0) {
+                                response += "A unit must have a positive number as health.\n";
+                            }
+                        } catch (NumberFormatException nfe) {
+                            response += "A unit must have a number as health.\n";
+                        }
+                        try {
+                            int amount = Integer.parseInt(inputAmount.getText());
+                            if (amount <= 0) {
+                                response += "There must be a positive number of units.\n";
+                            }
+                        } catch (NumberFormatException nfe) {
+                            response += "There must be an number of units.\n";
+                        }
+                        if (response.equals("")) {
+                            return UnitFactory.createUnits(
+                                    Integer.parseInt(inputAmount.getText()),
+                                    inputType.getValue(),
+                                    inputName.getText(),
+                                    Integer.parseInt(inputHp.getText())
+                                    );
+                        }
+                        else {
+                            Alert alert = new Alert(Alert.AlertType.WARNING);
+                            alert.setTitle("Add Units");
+                            alert.setHeaderText("Invalid input!");
+                            alert.setContentText(response);
+
+                            alert.showAndWait();
+                        }
+                        return null;
+                    }
+                    else {
+                        return null;
+                    }
+                }
+            });
+
+            Optional<List<Unit>> result = dialog.showAndWait();
+            if (result.isPresent()) {
+                army.addUnits(result.get());
+                editArmy();
+            }
         }
 
         private void deleteUnit() {
