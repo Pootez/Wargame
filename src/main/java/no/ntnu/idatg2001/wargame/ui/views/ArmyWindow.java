@@ -199,7 +199,7 @@ public class ArmyWindow extends Application {
                     err.setTitle("Error Dialog");
                     err.setHeaderText("File does not exist!");
                     err.setContentText("Check {HOME}/Documents/WargameArmies for saved files.");
-                    return;
+                    throw new IllegalStateException("File does not exist");
                 }
                 Controller.updateArmyList();
                 stage.close();
