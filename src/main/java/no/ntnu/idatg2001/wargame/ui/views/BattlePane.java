@@ -87,23 +87,6 @@ public class BattlePane extends BorderPane {
         vBox.minWidth(700);
         this.setCenter(vBox);
 
-        // VBox to hold pre-battle elements
-        VBox preGameVbox = new VBox();
-        preGameVbox.setAlignment(Pos.TOP_CENTER);
-        preGameVbox.setSpacing(5);
-
-        Slider speedSlider = new Slider(0,100,50);
-        Label speedLabel = new Label("Speed: " + String.valueOf(speedSlider.valueProperty().getValue().intValue()));
-        speedLabel.setFont(Font.font(10));
-
-        speedSlider.valueProperty().addListener(new ChangeListener<Number>() {
-
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                speedLabel.textProperty().setValue("Speed: " + String.valueOf(newValue.intValue()));
-            }
-        });
-
         // Create top buttons
         Button exitBtn = new Button("Exit");
         exitBtn.setOnAction(actionEvent -> Platform.exit());
@@ -120,11 +103,91 @@ public class BattlePane extends BorderPane {
         buttonBar.getChildren().addAll(exitBtn, viewArmies);
         this.setTop(buttonBar);
 
-        Button simulateBtn = new Button("Simulate");
-        simulateBtn.setPadding(new Insets(5,30,5,30));
-
-        preGameVbox.getChildren().addAll(speedLabel,speedSlider,simulateBtn);
-        vBox.getChildren().add(preGameVbox);
+        vBox.getChildren().add(new battleBox());
     }
 
+    /**
+     * Vbox to hold controls for the battle, contains methods for changing its own content.
+     */
+    public class battleBox extends VBox {
+
+        /**
+         * Constructor for BattleBox. Sets up format.
+         */
+        public battleBox() {
+            this.setAlignment(Pos.TOP_CENTER);
+            this.setSpacing(5);
+
+            preBattle();
+        }
+
+        /**
+         * Sets its own content to before a battle.
+         */
+        public void preBattle() {
+            this.getChildren().clear();
+
+            Slider speedSlider = new Slider(0,100,50);
+            Label speedLabel = new Label("Speed: " + String.valueOf(speedSlider.valueProperty().getValue().intValue()));
+            speedLabel.setFont(Font.font(10));
+
+            speedSlider.valueProperty().addListener(new ChangeListener<Number>() {
+
+                @Override
+                public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+                    speedLabel.textProperty().setValue("Speed: " + String.valueOf(newValue.intValue()));
+                }
+            });
+
+            Button simulateBtn = new Button("Simulate");
+            simulateBtn.setOnAction(actionEvent -> Controller.simulate(this));
+            simulateBtn.setPadding(new Insets(5,30,5,30));
+
+            this.getChildren().addAll(speedLabel,speedSlider,simulateBtn);
+
+        }
+
+        /**
+         * Sets its own content to the middle a battle.
+         */
+        public void midBattle() {
+            this.getChildren().clear();
+
+            Button cancelBtn = new Button("Cancel");
+            cancelBtn.setOnAction(actionEvent -> Controller.cancelSimulation(this));
+            cancelBtn.setPadding(new Insets(5,30,5,30));
+
+            this.getChildren().add(cancelBtn);
+        }
+
+        /**
+         * Sets its own content to after a battle.
+         */
+        public void postBattle() {
+            this.getChildren().clear();
+
+            Slider speedSlider = new Slider(0,100,50);
+            Label speedLabel = new Label("Speed: " + String.valueOf(speedSlider.valueProperty().getValue().intValue()));
+            speedLabel.setFont(Font.font(10));
+
+            speedSlider.valueProperty().addListener(new ChangeListener<Number>() {
+
+                @Override
+                public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+                    speedLabel.textProperty().setValue("Speed: " + String.valueOf(newValue.intValue()));
+                }
+            });
+
+            Button simulateBtn = new Button("Simulate");
+            simulateBtn.setOnAction(actionEvent -> Controller.simulate(this));
+            simulateBtn.setPadding(new Insets(5,30,5,30));
+
+            Button previousWinnerBtn = new Button("Previous Winner");
+            previousWinnerBtn.setOnAction(actionEvent -> Controller.viewpreviousWin());
+            previousWinnerBtn.setPadding(new Insets(5,30,5,30));
+
+            this.getChildren().addAll(speedLabel,speedSlider,simulateBtn,previousWinnerBtn);
+
+        }
+    }
 }

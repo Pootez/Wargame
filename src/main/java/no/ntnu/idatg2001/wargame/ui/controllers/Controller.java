@@ -32,6 +32,8 @@ public class Controller {
     private static Battle battle; // Battle for simulation, initializes with empty armies named "temp1" and "temp2"
     private static String saveDir; // String to {HOME}/Documents/WargameArmies
     private static List<Army> armies; // List of available armies
+    private static Army previousWinner; // Last simulation winner
+    private static boolean simRunning; // If the simulation is currently running
 
     private static Scene scene;
     private static GraphicsContext gc;
@@ -43,7 +45,10 @@ public class Controller {
      */
     public Controller() {
         battle = new Battle(new Army(""), new Army(""));
+        previousWinner = null;
+        simRunning = false;
         saveDir = System.getProperty("user.home").replaceAll("\\\\", "/") + "/Documents/WargameArmies";
+
         File folder = new File(saveDir);
         if (!folder.exists()) {folder.mkdir();}
         readArmies();
@@ -60,8 +65,8 @@ public class Controller {
      * Button to switch from armies pane to battle pane.
      */
     public static void armiesBackBtn() {
-        battle = new Battle(new Army(""), new Army(""));
         updateMainListViews();
+        clearBattle();
         scene.setRoot(new BattlePane());
     }
 
@@ -132,15 +137,17 @@ public class Controller {
      * @param fileName filename without ".csv"
      */
     public static void selectBattleArmy (int armyNum, String fileName) {
-        Army temp = FileHandler.readArmyCSV(saveDir + "/" + fileName + ".csv");
+        if (!(fileName == null)){
+            Army temp = FileHandler.readArmyCSV(saveDir + "/" + fileName + ".csv");
 
-        if (armyNum == 1) {
-            battle.setArmyOne(temp);
+            if (armyNum == 1) {
+                battle.setArmyOne(temp);
+            } else if (armyNum == 2) {
+                battle.setArmyTwo(temp);
+            } else {
+                throw new IllegalArgumentException("Invalid army number");
+            }
         }
-        else if (armyNum == 2) {
-            battle.setArmyTwo(temp);
-        }
-        else {throw new IllegalArgumentException("Invalid army number");}
         drawPreBattle();
     }
 
@@ -166,6 +173,56 @@ public class Controller {
             armyList.getItems().add(
                     fileName + "    ||    " + army.getName() + "    ||    " + army.getUnits().size() + "units"
             );
+        }
+    }
+
+    /**
+     * Clears the current Battle.
+     */
+    public static void clearBattle() {
+        battle = new Battle(new Army(""), new Army(""));
+        drawPreBattle();
+    }
+
+    /**
+     * Handles the simulate button in BattlePane and starts simulation.
+     *
+     * @param battleBox BattleBox from BattlePane
+     */
+    public static void simulate(BattlePane.battleBox battleBox) {
+        if (battle.getArmyOne().getName().equals("") || battle.getArmyTwo().getName().equals("")) {
+            //TODO Add dialog
+            throw new IllegalStateException("Two armies must be selected");
+        }
+        else {
+            //TODO implement actual sim
+            simRunning = true;
+            battleBox.midBattle();
+        }
+    }
+
+    /**
+     * Handles the cancel button in BattlePane.
+     *
+     * @param battleBox BattleBox from BattlePane
+     */
+    public static void cancelSimulation(BattlePane.battleBox battleBox) {
+        clearBattle();
+        simRunning = false;
+        battleBox.preBattle();
+    }
+
+    /**
+     * Opens the previous battle's winner, if any.
+     */
+    public static void viewpreviousWin() {
+        if (previousWinner != null) {
+            //TODO implement window
+            System.out.println(previousWinner.toString());
+        }
+        else {
+            //Todo add dialog
+            throw new IllegalStateException("No previous winner");
         }
     }
 
