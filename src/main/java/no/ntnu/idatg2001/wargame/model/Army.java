@@ -8,7 +8,7 @@ import java.util.Objects;
  * Class representing an army of units.
  *
  * @author sondesp
- * @version 2022-03-25
+ * @version 2022-05-23
  * @since 2022-02-24
  */
 
