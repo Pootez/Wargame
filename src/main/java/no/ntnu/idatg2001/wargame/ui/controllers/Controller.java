@@ -36,6 +36,7 @@ public class Controller {
     private static Scene scene;
     private static GraphicsContext gc;
     private static List<ListView> mainListViews;
+    private static ListView<String> armyList;
 
     /**
      * Constructor for the controller. Initializes variables.
@@ -59,7 +60,49 @@ public class Controller {
      * Button to switch from armies pane to battle pane.
      */
     public static void armiesBackBtn() {
+        battle = new Battle(new Army(""), new Army(""));
+        updateMainListViews();
         scene.setRoot(new BattlePane());
+    }
+
+    /**
+     * Opens the selected army within ArmiesPane.
+     */
+    public static void viewArmy() {
+        if (armyList.getSelectionModel().getSelectedIndex() < 0) {
+            //TODO Add dialog
+            throw new IndexOutOfBoundsException("Need an army selection");
+        }
+        else {
+            Army selected = FileHandler.readArmies(saveDir).get(armyList.getSelectionModel().getSelectedIndex());
+            //TODO Add window open
+            System.out.println(selected.toString());
+        }
+    }
+
+    /**
+     * Deletes the selected army within ArmiesPane.
+     */
+    public static void deleteArmy() {
+        if (armyList.getSelectionModel().getSelectedIndex() < 0) {
+            //TODO Add dialog
+            throw new IndexOutOfBoundsException("Need an army selection");
+        }
+        else {
+            File f = new File(saveDir);
+            String fileName = Arrays.stream(f.list()).map(obj -> obj.substring(0, obj.length() - 4)).toList()
+                    .get(armyList.getSelectionModel().getSelectedIndex());
+            File file = new File(saveDir + "/" + fileName + ".csv");
+            if (file.delete()) {
+                //TODO Add dialog
+                System.out.println("Deleted file: " + fileName);
+            }
+            else {
+                //TODO Add dialog
+                throw new IllegalStateException("File does not exist");
+            }
+            updateArmyList();
+        }
     }
 
     /**
@@ -111,6 +154,22 @@ public class Controller {
     }
 
     /**
+     * Updates the viewable army list within ArmiesPane.
+     */
+    public static void updateArmyList() {
+        armyList.getItems().clear();
+        File f = new File(saveDir);
+        List<String> fileNames = Arrays.stream(f.list()).map(obj -> obj.substring(0, obj.length() - 4)).toList();
+
+        for (String fileName : fileNames) {
+            Army army = FileHandler.readArmyCSV(saveDir + "/" + fileName + ".csv");
+            armyList.getItems().add(
+                    fileName + "    ||    " + army.getName() + "    ||    " + army.getUnits().size() + "units"
+            );
+        }
+    }
+
+    /**
      * Draw pre-battle information to the canvas in battle pane.
      */
     public static void drawPreBattle() {
@@ -155,5 +214,15 @@ public class Controller {
      */
     public static void setScene(Scene newScene) {
         scene = newScene;
+    }
+
+    /**
+     * Adds the list of viewable armies within ArmiesPane to the controller for updates.
+     * Used within viewArmy and deleteArmy
+     *
+     * @param list ListView from ArmiesPane.
+     */
+    public static void setArmyList(ListView list) {
+        armyList = list;
     }
 }
