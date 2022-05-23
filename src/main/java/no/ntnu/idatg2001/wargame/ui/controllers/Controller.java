@@ -7,6 +7,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
@@ -44,6 +45,7 @@ public class Controller {
     private static GraphicsContext gc;
     private static List<ListView> mainListViews;
     private static ListView<String> armyList;
+    private static Slider speed;
 
     /**
      * Constructor for the controller. Initializes variables.
@@ -228,9 +230,18 @@ public class Controller {
             alert.showAndWait();
         }
         else {
-            //TODO implement actual sim
-            simRunning = true;
-            battleBox.midBattle();
+            if (speed.getValue() < 1) {
+                previousWinner = battle.simulate();
+                battleBox.postBattle();
+                if (previousWinner == null) {
+                    drawPreBattle();
+                }
+            }
+            else {
+                //TODO implement actual sim
+                simRunning = true;
+                battleBox.midBattle();
+            }
         }
     }
 
@@ -281,6 +292,17 @@ public class Controller {
         gc.fillText(battle.getArmyTwo().getName(),200,225);
     }
 
+    public static void drawWinner() {
+        gc.setFill(Color.BLACK);
+        gc.fillRect(0,0,400,300);
+
+        gc.setFill(Color.WHITE);
+        gc.setFont(Font.font("Tahoma",40));
+        gc.setTextAlign(TextAlignment.CENTER);
+        gc.fillText("" + previousWinner.getName(),200,100);
+        gc.fillText("wins!",200,200);
+    }
+
     /**
      * Sets the graphical context, used to update canvas.
      *
@@ -321,6 +343,10 @@ public class Controller {
      */
     public static void setArmyList(ListView list) {
         armyList = list;
+    }
+
+    public static void setSpeed(Slider speedSlider) {
+        speed = speedSlider;
     }
 
     /**

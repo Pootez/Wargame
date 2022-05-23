@@ -120,6 +120,7 @@ public class BattlePane extends BorderPane {
             this.getChildren().clear();
 
             Slider speedSlider = new Slider(0,100,50);
+            Controller.setSpeed(speedSlider);
             Label speedLabel = new Label("Speed: " + String.valueOf(speedSlider.valueProperty().getValue().intValue()));
             speedLabel.setFont(Font.font(12));
 
@@ -152,9 +153,12 @@ public class BattlePane extends BorderPane {
          * Sets its own content to after a battle.
          */
         public void postBattle() {
+            Controller.drawWinner();
+
             this.getChildren().clear();
 
             Slider speedSlider = new Slider(0,100,50);
+            Controller.setSpeed(speedSlider);
             Label speedLabel = new Label("Speed: " + String.valueOf(speedSlider.valueProperty().getValue().intValue()));
             speedLabel.setFont(Font.font(10));
 
