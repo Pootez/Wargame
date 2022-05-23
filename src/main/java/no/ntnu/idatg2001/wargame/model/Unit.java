@@ -14,8 +14,6 @@ public abstract class Unit {
     protected int health;
     protected int attack;
     protected int armor;
-    protected float x;
-    protected float y;
 
     /**
      * Constructor for unit
