@@ -134,6 +134,7 @@ public class ArmyWindow extends Application {
             buttonBar.getChildren().addAll(addUnitsBtn, deleteUnitBtn, copyUnitBtn);
 
             Label nameLabel = new Label("Army Name: ");
+            nameLabel.setFont(Font.font(22));
             nameField = new TextField(army.getName());
 
 

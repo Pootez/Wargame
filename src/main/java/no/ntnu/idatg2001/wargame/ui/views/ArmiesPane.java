@@ -67,7 +67,7 @@ public class ArmiesPane extends BorderPane {
         CustomButton deleteArmyBtn = new CustomButton("Delete", event -> Controller.deleteArmy());
 
         HBox selectionBar = new HBox();
-        selectionBar.setAlignment(Pos.CENTER);
+        selectionBar.setAlignment(Pos.CENTER_LEFT);
         selectionBar.getChildren().addAll(viewArmyBtn, deleteArmyBtn);
         this.setBottom(selectionBar);
     }

@@ -174,6 +174,7 @@ public class BattlePane extends BorderPane {
             CustomButton previousWinnerBtn = new CustomButton("Previous Winner", event -> Controller.viewPreviousWin());
 
             HBox hBox = new HBox();
+            hBox.setAlignment(Pos.CENTER);
             hBox.getChildren().addAll(simulateBtn,previousWinnerBtn);
 
             this.getChildren().addAll(speedLabel,speedSlider,hBox);
