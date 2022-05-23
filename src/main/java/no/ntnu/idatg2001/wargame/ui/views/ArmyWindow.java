@@ -371,7 +371,19 @@ public class ArmyWindow extends Application {
             dialog.setContentText("Enter new file name: ");
 
             Optional<String> result = dialog.showAndWait();
-            result.ifPresent(name -> fileName = result.get());
+            result.ifPresent(name -> {
+                if (name.equals("")) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Changing file name");
+                    alert.setHeaderText("File must have a name!");
+                    alert.setContentText("Please enter a file name.");
+
+                    alert.showAndWait();
+                }
+                else {
+                    fileName = name;
+                }
+            });
             editArmy();
         }
 

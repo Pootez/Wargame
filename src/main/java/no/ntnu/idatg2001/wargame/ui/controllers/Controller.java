@@ -4,10 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
@@ -76,6 +73,32 @@ public class Controller {
         updateMainListViews();
         clearBattle();
         scene.setRoot(new BattlePane());
+    }
+
+    public static void newArmy() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("New Army");
+        dialog.setHeaderText("Create new army.");
+        dialog.setContentText("Enter new file name: ");
+
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(fileName -> {
+            if (fileName.equals("")) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("New Army");
+                alert.setHeaderText("New file must have a name!");
+                alert.setContentText("Please enter a file name.");
+
+                alert.showAndWait();
+            }
+            else {
+                try {
+                    new ArmyWindow(fileName, new Army("New army")).start(new Stage());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     /**

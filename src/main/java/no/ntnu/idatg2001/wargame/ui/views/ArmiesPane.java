@@ -56,6 +56,8 @@ public class ArmiesPane extends BorderPane {
         });
 
         // Selection Buttons
+        CustomButton newArmyBtn = new CustomButton("New Army", event -> Controller.newArmy());
+
         CustomButton viewArmyBtn = new CustomButton("View/Edit", event -> {
             try {
                 Controller.viewArmy();
@@ -68,7 +70,7 @@ public class ArmiesPane extends BorderPane {
 
         HBox selectionBar = new HBox();
         selectionBar.setAlignment(Pos.CENTER_LEFT);
-        selectionBar.getChildren().addAll(viewArmyBtn, deleteArmyBtn);
+        selectionBar.getChildren().addAll(newArmyBtn, viewArmyBtn, deleteArmyBtn);
         this.setBottom(selectionBar);
     }
 }
