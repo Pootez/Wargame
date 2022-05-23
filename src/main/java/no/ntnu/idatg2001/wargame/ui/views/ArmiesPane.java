@@ -48,7 +48,13 @@ public class ArmiesPane extends BorderPane {
 
         // Selection Buttons
         Button viewArmyBtn = new Button("View/Edit");
-        viewArmyBtn.setOnAction(actionEvent -> Controller.viewArmy());
+        viewArmyBtn.setOnAction(actionEvent -> {
+            try {
+                Controller.viewArmy();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
         viewArmyBtn.setFont(Font.font(20));
         viewArmyBtn.setPadding(new Insets(5,30,5,30));
 

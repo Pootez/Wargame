@@ -8,10 +8,12 @@ import javafx.scene.control.ListView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
 import no.ntnu.idatg2001.wargame.model.Army;
 import no.ntnu.idatg2001.wargame.model.Battle;
 import no.ntnu.idatg2001.wargame.model.FileHandler;
 import no.ntnu.idatg2001.wargame.ui.views.ArmiesPane;
+import no.ntnu.idatg2001.wargame.ui.views.ArmyWindow;
 import no.ntnu.idatg2001.wargame.ui.views.BattlePane;
 
 import java.io.File;
@@ -73,7 +75,7 @@ public class Controller {
     /**
      * Opens the selected army within ArmiesPane.
      */
-    public static void viewArmy() {
+    public static void viewArmy() throws Exception {
         if (armyList.getSelectionModel().getSelectedIndex() < 0) {
             //TODO Add dialog
             throw new IndexOutOfBoundsException("Need an army selection");
@@ -81,7 +83,12 @@ public class Controller {
         else {
             Army selected = FileHandler.readArmies(saveDir).get(armyList.getSelectionModel().getSelectedIndex());
             //TODO Add window open
-            System.out.println(selected.toString());
+            File f = new File(saveDir);
+            String fileNameCsv = Arrays.stream(f.list()).toList()
+                    .get(armyList.getSelectionModel().getSelectedIndex());
+            String fileName = fileNameCsv.substring(0, fileNameCsv.length() - 4);
+
+            new ArmyWindow(fileName).start(new Stage());
         }
     }
 
@@ -281,5 +288,14 @@ public class Controller {
      */
     public static void setArmyList(ListView list) {
         armyList = list;
+    }
+
+    /**
+     * Returns the controllers save directory.
+     *
+     * @return String of save directory
+     */
+    public static String getSaveDir() {
+        return saveDir;
     }
 }
