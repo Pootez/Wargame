@@ -192,6 +192,7 @@ public class Controller {
     public static void updateMainListViews() {
         for (ListView list : mainListViews) {
             list.itemsProperty().set(getArmiesObservableList());
+            clearBattle();
         }
     }
 

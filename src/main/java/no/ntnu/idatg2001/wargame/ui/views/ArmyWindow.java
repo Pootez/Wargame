@@ -322,6 +322,7 @@ public class ArmyWindow extends Application {
             army.setName(nameField.getText());
             FileHandler.writeArmyCSV(army, Controller.getSaveDir() + "/" + fileName + ".csv");
             Controller.updateArmyList();
+            Controller.updateMainListViews();
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Save");
