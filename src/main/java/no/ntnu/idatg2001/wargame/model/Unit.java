@@ -1,5 +1,7 @@
 package no.ntnu.idatg2001.wargame.model;
 
+import java.util.List;
+
 /**
  * Superclass for units, given their name and statistics.
  *
@@ -14,6 +16,14 @@ public abstract class Unit {
     protected int health;
     protected int attack;
     protected int armor;
+
+    private double x;
+    private double y;
+    private int range;
+    private double speed;
+    private int cooldown;
+    private int lastAttack;
+    private Unit target;
 
     /**
      * Constructor for unit
@@ -31,6 +41,9 @@ public abstract class Unit {
         this.health = health;
         this.attack = attack;
         this.armor = armor;
+        range = 5;
+        speed = 1;
+        cooldown = 20;
     }
 
     /**
@@ -44,6 +57,9 @@ public abstract class Unit {
 
         this.name = name;
         this.health = health;
+        range = 5;
+        speed = 1;
+        cooldown = 20;
     }
 
     /**
@@ -105,5 +121,72 @@ public abstract class Unit {
         int hp = opponent.getHealth() - attack - getAttackBonus() + opponent.getArmor() + opponent.getResistBonus();
         opponent.attacked();
         if (hp < opponent.getHealth()) {opponent.setHealth(hp);}
+    }
+
+    public void attack(Army army) {
+        if (army.hasUnits()) {
+            if (target == null || target.getHealth() <= 0) {
+                List<Unit> enemyUnits = army.getUnits();
+                Unit target = findTarget(enemyUnits);
+            }
+            if (distToUnit(target) <= range) {
+                if (lastAttack == -1 || lastAttack >= cooldown) {
+                    attack(target);
+                    lastAttack = 00;
+                }
+                else {
+                    lastAttack++;
+                }
+            }
+            else {
+                moveTowardsUnit(target);
+            }
+        }
+    }
+
+    private double distToUnit(Unit unit) {
+        return Math.sqrt(Math.pow(unit.getX() - x, 2) + Math.pow(unit.getY() - y, 2));
+    }
+
+    private Unit findTarget(List<Unit> units) {
+        return units.stream().sorted((a, b) -> Double.compare(distToUnit(a),distToUnit(b))).toList().get(0);
+    }
+
+    private void moveTowardsUnit(Unit unit) {
+        double ang = Math.atan2(unit.getY() - y, unit.getX() - x);
+        x += Math.cos(ang) * speed;
+        y += Math.sin(ang) * speed;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
+    public int getCooldown() {
+        return cooldown;
+    }
+
+    public void setCooldown(int cooldown) {
+        this.cooldown = cooldown;
+    }
+
+    public int getLastAttack() {
+        return lastAttack;
+    }
+
+    public void setLastAttack(int lastAttack) {
+        this.lastAttack = lastAttack;
     }
 }
