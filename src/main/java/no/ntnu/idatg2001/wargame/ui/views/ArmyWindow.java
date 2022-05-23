@@ -3,11 +3,14 @@ package no.ntnu.idatg2001.wargame.ui.views;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import no.ntnu.idatg2001.wargame.model.Army;
 import no.ntnu.idatg2001.wargame.model.FileHandler;
@@ -49,7 +52,7 @@ public class ArmyWindow extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
-        ArmyPane armyPane = new ArmyPane();
+        ArmyPane armyPane = new ArmyPane(stage);
 
         // Create a scene for primaryStage and assign stylesheet
         Scene scene = new Scene(armyPane);
@@ -67,24 +70,12 @@ public class ArmyWindow extends Application {
 
     private class ArmyPane extends BorderPane {
 
-        private TableView tableView;
+        private TableView<Row> tableView;
+        private Stage stage;
 
-        public ArmyPane () {
-            editArmy();
-        }
-
-        public void editArmy() {
-            // Create top buttons
-            CustomButton addUnitsBtn = new CustomButton("Add Units", e -> addUnits());
-            CustomButton deleteUnitsBtn = new CustomButton("Delete Unit", e -> deleteUnit());
-
-            HBox buttonBar = new HBox();
-            buttonBar.setAlignment(Pos.CENTER);
-            buttonBar.getChildren().addAll(addUnitsBtn, deleteUnitsBtn);
-            this.setTop(buttonBar);
-
-            // Create center table
-            tableView = new TableView();
+        public ArmyPane (Stage stage) {
+            this.stage = stage;
+            tableView = new TableView<>();
 
             TableColumn<Row, String> typeColumn = new TableColumn<>("Unit Type");
             typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -97,20 +88,75 @@ public class ArmyWindow extends Application {
 
             tableView.getColumns().addAll(typeColumn, nameColumn, hpColumn);
 
+            editArmy();
+        }
+
+        public void editArmy() {
+            // Create top buttons
+            CustomButton addUnitsBtn = new CustomButton("Add Units", event -> addUnits());
+            CustomButton deleteUnitsBtn = new CustomButton("Delete Unit", event -> deleteUnit());
+
+            Label fileLabel = new Label("Current File: ");
+            fileLabel.setFont(Font.font(22));
+            fileLabel.setStyle("-fx-font-weight: bold");
+            Label currentFile = new Label(fileName);
+            currentFile.setFont(Font.font(22));
+
+            TextFlow textFlow = new TextFlow();
+            textFlow.getChildren().addAll(fileLabel, currentFile);
+
+            HBox buttonBar = new HBox();
+            buttonBar.getChildren().addAll(addUnitsBtn, deleteUnitsBtn, textFlow);
+            this.setTop(buttonBar);
+
+            // Create center table
+            tableView.getItems().clear();
+
             for (Unit unit : army.getUnits()) {
-                tableView.getItems().add(new Row(unit));
+                tableView.getItems().add(new Row(unit, army.getUnits().indexOf(unit)));
             }
+
+            tableView.sort();
 
             this.setCenter(tableView);
 
+            // Create Bottom Buttons
+            CustomButton saveBtn = new CustomButton("Save", event -> save());
+            CustomButton deleteBtn = new CustomButton("Delete File", event -> delete());
+            CustomButton changeNameBtn = new CustomButton("Change File Name", event -> changeName());
+            CustomButton cancelBtn = new CustomButton("Cancel", event -> cancel());
+
+            HBox bottom = new HBox();
+            bottom.setAlignment(Pos.CENTER);
+            bottom.getChildren().addAll(saveBtn, deleteBtn, changeNameBtn, cancelBtn);
+            this.setBottom(bottom);
         }
 
         private void addUnits() {
-
+            //TODO Add dialog
         }
 
         private void deleteUnit() {
+            Row selected = tableView.getSelectionModel().getSelectedItem();
+            army.remove(army.getUnits().get(selected.getId()));
+            editArmy();
+        }
 
+        private void save() {
+            //TODO Add dialog
+        }
+
+        private void delete() {
+            //TODO Add dialog
+        }
+
+        public void changeName() {
+
+        }
+
+        private void cancel() {
+            //TODO Add dialog
+            stage.close();
         }
     }
 
@@ -119,11 +165,13 @@ public class ArmyWindow extends Application {
         private String type;
         private String name;
         private String hp;
+        private int id;
 
-        public Row (Unit unit) {
+        public Row (Unit unit, int id) {
             type = unit.getClass().getSimpleName();
             name = unit.getName();
             hp = String.valueOf(unit.getHealth());
+            this.id = id;
         }
 
         public String getType() {
@@ -136,6 +184,10 @@ public class ArmyWindow extends Application {
 
         public String getHp() {
             return hp;
+        }
+
+        public int getId() {
+            return id;
         }
     }
 }
