@@ -57,6 +57,17 @@ public class Army {
     }
 
     /**
+     * Applies terrain buffs/debuffs to all units.
+     *
+     * @param terrain Terrain enum value
+     */
+    public void applyTerrain(Terrain terrain) {
+        for (Unit unit : units) {
+            unit.applyTerrain(terrain);
+        }
+    }
+
+    /**
      * @param unit Unit to add
      * @return True if unit was successfully added
      */

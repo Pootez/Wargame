@@ -25,9 +25,12 @@ public class Battle {
     /**
      * @return Null if both armies are eliminated, else returns army with remaining units
      */
-    public Army simulate() {
+    public Army simulate(Terrain terrain) {
         boolean running = true;
         Army winner = null;
+
+        armyOne.applyTerrain(terrain);
+        armyTwo.applyTerrain(terrain);
 
         while (running) {
             Unit unitOne = armyOne.getRandom();

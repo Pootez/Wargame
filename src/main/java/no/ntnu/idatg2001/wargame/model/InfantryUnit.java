@@ -11,6 +11,9 @@ package no.ntnu.idatg2001.wargame.model;
 
 public class InfantryUnit extends Unit {
 
+    private int attackBonus = 2;
+    private int resistBonus = 1;
+
     /**
      * @param name Short descriptive name. Ex: "Archer", "Swordsman"
      * @param health Health of unit, greater than 0
@@ -34,13 +37,23 @@ public class InfantryUnit extends Unit {
      * @return Attack bonus of 2
      */
     public int getAttackBonus() {
-        return 2;
+        return attackBonus;
     }
 
     /**
      * @return Resistance bonus of 1
      */
     public int getResistBonus() {
-        return 1;
+        return resistBonus;
+    }
+
+    @Override
+    public void applyTerrain(Terrain terrain) {
+        switch (terrain) {
+            case FOREST:
+                attackBonus = 4;
+                resistBonus = 3;
+                break;
+        }
     }
 }

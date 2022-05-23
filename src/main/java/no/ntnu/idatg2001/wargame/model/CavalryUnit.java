@@ -12,6 +12,7 @@ package no.ntnu.idatg2001.wargame.model;
 public class CavalryUnit extends Unit {
 
     private int attackBonus = 6;
+    private int resistBonus = 1;
 
     /**
      * @param name Short descriptive name. Ex: "Archer", "Swordsman"
@@ -44,7 +45,7 @@ public class CavalryUnit extends Unit {
      * @return Resistance bonus of 1
      */
     public int getResistBonus() {
-        return 1;
+        return resistBonus;
     }
 
     @Override
@@ -53,5 +54,18 @@ public class CavalryUnit extends Unit {
         if (attackBonus > 2) {attackBonus -= 4;}
         opponent.attacked();
         if (hp < opponent.getHealth()) {opponent.setHealth(hp);}
+    }
+
+    @Override
+    public void applyTerrain(Terrain terrain) {
+        switch (terrain) {
+            case NONE:
+                break;
+            case FOREST:
+                resistBonus = 0;
+                break;
+            case PLAINS:
+                attackBonus = 7;
+        }
     }
 }

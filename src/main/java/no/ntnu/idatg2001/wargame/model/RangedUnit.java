@@ -11,7 +11,8 @@ package no.ntnu.idatg2001.wargame.model;
 
 public class RangedUnit extends Unit {
 
-    private int resist = 6;
+    private int attackBonus = 3;
+    private int resistBonus = 6;
 
     /**
      * @param name Short descriptive name. Ex: "Archer", "Swordsman"
@@ -44,11 +45,25 @@ public class RangedUnit extends Unit {
      * @return Resistance bonus of 6-2
      */
     public int getResistBonus() {
-        return resist;
+        return resistBonus;
     }
 
     @Override
     public void attacked() {
-        if (resist > 2) {resist -= 2;}
+        if (resistBonus > 2) {
+            resistBonus -= 2;}
+    }
+
+    @Override
+    public void applyTerrain(Terrain terrain) {
+        switch (terrain) {
+            case NONE:
+                break;
+            case FOREST:
+                attackBonus = 1;
+                break;
+            case HILLS:
+                attackBonus = 5;
+        }
     }
 }

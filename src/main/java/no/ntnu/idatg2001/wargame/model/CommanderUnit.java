@@ -30,4 +30,7 @@ public class CommanderUnit extends CavalryUnit {
         attack = 25;
         armor = 15;
     }
+
+    @Override
+    public void applyTerrain(Terrain terrain) {}
 }

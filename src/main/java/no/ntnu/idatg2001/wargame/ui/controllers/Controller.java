@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import no.ntnu.idatg2001.wargame.model.Army;
 import no.ntnu.idatg2001.wargame.model.Battle;
 import no.ntnu.idatg2001.wargame.model.FileHandler;
+import no.ntnu.idatg2001.wargame.model.Terrain;
 import no.ntnu.idatg2001.wargame.ui.views.ArmiesPane;
 import no.ntnu.idatg2001.wargame.ui.views.ArmyWindow;
 import no.ntnu.idatg2001.wargame.ui.views.BattlePane;
@@ -236,7 +237,7 @@ public class Controller {
         }
         else {
             if (speed.getValue() < 1) {
-                previousWinner = battle.simulate();
+                previousWinner = battle.simulate(Terrain.PLAINS);
                 battleBox.postBattle();
                 if (previousWinner == null) {
                     drawPreBattle();

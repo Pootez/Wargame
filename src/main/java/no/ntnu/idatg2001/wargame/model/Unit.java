@@ -4,7 +4,7 @@ package no.ntnu.idatg2001.wargame.model;
  * Superclass for units, given their name and statistics.
  *
  * @author sondesp
- * @version 2022-05-19
+ * @version 2022-05-23
  * @since 2022-02-22
  */
 
@@ -14,6 +14,8 @@ public abstract class Unit {
     protected int health;
     protected int attack;
     protected int armor;
+    protected float x;
+    protected float y;
 
     /**
      * Constructor for unit
@@ -95,6 +97,7 @@ public abstract class Unit {
 
     public abstract int getAttackBonus();
     public abstract int getResistBonus();
+    public abstract void applyTerrain(Terrain terrain);
     public void attacked() {}
 
     /**

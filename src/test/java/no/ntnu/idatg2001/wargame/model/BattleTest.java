@@ -33,12 +33,12 @@ class BattleTest {
     @Test
     void simulate() {
         Battle battle = new Battle(armyOne,armyTwo);
-        assertNotEquals(null,battle.simulate());
+        assertNotEquals(null,battle.simulate(Terrain.FOREST));
     }
 
     @Test
     void simulateTwo() {
         Battle battle = new Battle(armyTwo,armyThree);
-        assertNull(battle.simulate());
+        assertNull(battle.simulate(Terrain.HILLS));
     }
 }
