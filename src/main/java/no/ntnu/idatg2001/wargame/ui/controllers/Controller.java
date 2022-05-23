@@ -226,7 +226,7 @@ public class Controller {
      *
      * @param battleBox BattleBox from BattlePane
      */
-    public static void simulate(BattlePane.battleBox battleBox) {
+    public static void simulate(BattlePane.battleBox battleBox, Terrain terrain) {
         if (battle.getArmyOne().getName().equals("") || battle.getArmyTwo().getName().equals("")) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Simulate");
@@ -237,7 +237,7 @@ public class Controller {
         }
         else {
             if (speed.getValue() < 1) {
-                previousWinner = battle.simulate(Terrain.PLAINS);
+                previousWinner = battle.simulate(terrain);
                 battleBox.postBattle();
                 if (previousWinner == null) {
                     drawPreBattle();

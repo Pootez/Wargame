@@ -11,7 +11,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Box;
 import javafx.scene.text.Font;
+import no.ntnu.idatg2001.wargame.model.Terrain;
 import no.ntnu.idatg2001.wargame.ui.controllers.Controller;
 
 /**
@@ -132,9 +134,14 @@ public class BattlePane extends BorderPane {
                 }
             });
 
-            CustomButton simulateBtn = new CustomButton("Simulate", event -> Controller.simulate(this));
+            ChoiceBox choiceBox = new ChoiceBox();
+            choiceBox.getItems().setAll(Terrain.values());
+            choiceBox.getSelectionModel().selectFirst();
 
-            this.getChildren().addAll(speedLabel,speedSlider,simulateBtn);
+            CustomButton simulateBtn = new CustomButton("Simulate", event -> Controller.simulate(
+                    this, Terrain.valueOf(choiceBox.getSelectionModel().getSelectedItem().toString())));
+
+            this.getChildren().addAll(speedLabel, speedSlider, simulateBtn, choiceBox);
 
         }
 
@@ -170,14 +177,19 @@ public class BattlePane extends BorderPane {
                 }
             });
 
-            CustomButton simulateBtn = new CustomButton("Simulate", event -> Controller.simulate(this));
+            ChoiceBox choiceBox = new ChoiceBox();
+            choiceBox.getItems().setAll(Terrain.values());
+            choiceBox.getSelectionModel().selectFirst();
+
+            CustomButton simulateBtn = new CustomButton("Simulate", event -> Controller.simulate(
+                    this, Terrain.valueOf(choiceBox.getSelectionModel().getSelectedItem().toString())));
             CustomButton previousWinnerBtn = new CustomButton("Previous Winner", event -> Controller.viewPreviousWin());
 
             HBox hBox = new HBox();
             hBox.setAlignment(Pos.CENTER);
-            hBox.getChildren().addAll(simulateBtn,previousWinnerBtn);
+            hBox.getChildren().addAll(simulateBtn, previousWinnerBtn);
 
-            this.getChildren().addAll(speedLabel,speedSlider,hBox);
+            this.getChildren().addAll(speedLabel, speedSlider, hBox, choiceBox);
 
         }
     }
