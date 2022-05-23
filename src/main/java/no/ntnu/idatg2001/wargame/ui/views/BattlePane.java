@@ -167,7 +167,7 @@ public class BattlePane extends BorderPane {
             });
 
             CustomButton simulateBtn = new CustomButton("Simulate", event -> Controller.simulate(this));
-            CustomButton previousWinnerBtn = new CustomButton("Previous Winner", event -> Controller.viewpreviousWin());
+            CustomButton previousWinnerBtn = new CustomButton("Previous Winner", event -> Controller.viewPreviousWin());
 
             HBox hBox = new HBox();
             hBox.getChildren().addAll(simulateBtn,previousWinnerBtn);

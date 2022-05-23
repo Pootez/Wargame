@@ -4,6 +4,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -20,6 +22,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Controller for the application.
@@ -77,12 +80,15 @@ public class Controller {
      */
     public static void viewArmy() throws Exception {
         if (armyList.getSelectionModel().getSelectedIndex() < 0) {
-            //TODO Add dialog
-            throw new IndexOutOfBoundsException("Need an army selection");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("View/Edit Army");
+            alert.setHeaderText("No army Selected!");
+            alert.setContentText("Please select an army to view.");
+
+            alert.showAndWait();
         }
         else {
             Army selected = FileHandler.readArmies(saveDir).get(armyList.getSelectionModel().getSelectedIndex());
-            //TODO Add window open
             File f = new File(saveDir);
             String fileNameCsv = Arrays.stream(f.list()).toList()
                     .get(armyList.getSelectionModel().getSelectedIndex());
@@ -97,20 +103,36 @@ public class Controller {
      */
     public static void deleteArmy() {
         if (armyList.getSelectionModel().getSelectedIndex() < 0) {
-            //TODO Add dialog
-            throw new IndexOutOfBoundsException("Need an army selection");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("View/Edit Army");
+            alert.setHeaderText("No army Selected!");
+            alert.setContentText("Please select an army to view.");
+
+            alert.showAndWait();
         }
         else {
             File f = new File(saveDir);
             String fileName = Arrays.stream(f.list()).map(obj -> obj.substring(0, obj.length() - 4)).toList()
                     .get(armyList.getSelectionModel().getSelectedIndex());
             File file = new File(saveDir + "/" + fileName + ".csv");
-            if (file.delete()) {
-                //TODO Add dialog
-                System.out.println("Deleted file: " + fileName);
+            if (file.exists()) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Delete File");
+                alert.setHeaderText("You are about to delete: " + fileName);
+                alert.setContentText("Are you ok with this?");
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK){
+                    file.delete();
+                }
             }
             else {
-                //TODO Add dialog
+                Alert err = new Alert(Alert.AlertType.ERROR);
+                err.setTitle("Error Dialog");
+                err.setHeaderText("File does not exist!");
+                err.setContentText("Check {HOME}/Documents/WargameArmies for saved files.");
+
+                err.showAndWait();
                 throw new IllegalStateException("File does not exist");
             }
             updateArmyList();
@@ -198,8 +220,12 @@ public class Controller {
      */
     public static void simulate(BattlePane.battleBox battleBox) {
         if (battle.getArmyOne().getName().equals("") || battle.getArmyTwo().getName().equals("")) {
-            //TODO Add dialog
-            throw new IllegalStateException("Two armies must be selected");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Simulate");
+            alert.setHeaderText("Select two armies!");
+            alert.setContentText("Both armies need to be selected.");
+
+            alert.showAndWait();
         }
         else {
             //TODO implement actual sim
@@ -222,14 +248,21 @@ public class Controller {
     /**
      * Opens the previous battle's winner, if any.
      */
-    public static void viewpreviousWin() {
+    public static void viewPreviousWin() {
         if (previousWinner != null) {
-            //TODO implement window
-            System.out.println(previousWinner.toString());
+            try {
+                new ArmyWindow("previousWin", previousWinner).start(new Stage());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         else {
-            //Todo add dialog
-            throw new IllegalStateException("No previous winner");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Previous Winner");
+            alert.setHeaderText("There was no previous winner!");
+            alert.setContentText("Assuming nothing went wrong, they might've tied!");
+
+            alert.showAndWait();
         }
     }
 
