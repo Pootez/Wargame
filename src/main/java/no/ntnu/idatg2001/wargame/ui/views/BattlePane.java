@@ -141,8 +141,7 @@ public class BattlePane extends BorderPane {
             CustomButton simulateBtn = new CustomButton("Simulate", event -> Controller.simulate(
                     this, Terrain.valueOf(choiceBox.getSelectionModel().getSelectedItem().toString())));
 
-            this.getChildren().addAll(speedLabel, speedSlider, simulateBtn, choiceBox);
-
+            this.getChildren().addAll(speedLabel, speedSlider, choiceBox, simulateBtn);
         }
 
         /**
@@ -189,8 +188,7 @@ public class BattlePane extends BorderPane {
             hBox.setAlignment(Pos.CENTER);
             hBox.getChildren().addAll(simulateBtn, previousWinnerBtn);
 
-            this.getChildren().addAll(speedLabel, speedSlider, hBox, choiceBox);
-
+            this.getChildren().addAll(speedLabel, speedSlider, choiceBox, hBox);
         }
     }
 }
