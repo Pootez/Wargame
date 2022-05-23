@@ -14,9 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
-import no.ntnu.idatg2001.wargame.model.Army;
-import no.ntnu.idatg2001.wargame.model.FileHandler;
-import no.ntnu.idatg2001.wargame.model.Unit;
+import no.ntnu.idatg2001.wargame.model.*;
 import no.ntnu.idatg2001.wargame.ui.controllers.Controller;
 
 /**
@@ -97,7 +95,16 @@ public class ArmyWindow extends Application {
         public void editArmy() {
             // Create top buttons
             CustomButton addUnitsBtn = new CustomButton("Add Units", event -> addUnits());
-            CustomButton deleteUnitsBtn = new CustomButton("Delete Unit", event -> deleteUnit());
+            CustomButton deleteUnitBtn = new CustomButton("Delete Unit", event -> deleteUnit());
+            CustomButton copyUnitBtn = new CustomButton("Copy Unit", event -> copyUnit());
+
+            HBox buttonBar = new HBox();
+            buttonBar.getChildren().addAll(addUnitsBtn, deleteUnitBtn, copyUnitBtn);
+
+            Label nameLabel = new Label("Army Name: ");
+            nameField = new TextField(army.getName());
+
+
 
             Label fileLabel = new Label("Current File: ");
             fileLabel.setFont(Font.font(22));
@@ -108,13 +115,8 @@ public class ArmyWindow extends Application {
             TextFlow textFlow = new TextFlow();
             textFlow.getChildren().addAll(fileLabel, currentFile);
 
-            HBox buttonBar = new HBox();
-            buttonBar.getChildren().addAll(addUnitsBtn, deleteUnitsBtn, textFlow);
-
-            Label nameLabel = new Label("Army Name: ");
-            nameField = new TextField(army.getName());
             HBox armyNameText = new HBox();
-            armyNameText.getChildren().addAll(nameLabel, nameField);
+            armyNameText.getChildren().addAll(nameLabel, nameField, textFlow);
 
             VBox vBox = new VBox();
             vBox.getChildren().addAll(armyNameText, buttonBar);
@@ -153,6 +155,20 @@ public class ArmyWindow extends Application {
             editArmy();
         }
 
+        private void copyUnit() {
+            Row selected = tableView.getSelectionModel().getSelectedItem();
+            String name = selected.getName();
+            int hp = Integer.parseInt(selected.getHp());
+            String type = selected.getType() + "Unit";
+            Unit temp = type.equals("CommanderUnit") ? new CommanderUnit(name,hp) :
+                    type.equals("InfantryUnit") ? new InfantryUnit(name,hp) :
+                            type.equals("CavalryUnit") ? new CavalryUnit(name,hp) :
+                                    type.equals("RangedUnit") ? new RangedUnit(name,hp) : null;
+
+            army.addUnit(temp);
+            editArmy();
+        }
+
         private void save() {
             army.setName(nameField.getText());
             FileHandler.writeArmyCSV(army, Controller.getSaveDir() + "/" + fileName + ".csv");
@@ -182,7 +198,7 @@ public class ArmyWindow extends Application {
         private int id;
 
         public Row (Unit unit, int id) {
-            type = unit.getClass().getSimpleName();
+            type = unit.getClass().getSimpleName().substring(0, unit.getClass().getSimpleName().length() - 4);
             name = unit.getName();
             hp = String.valueOf(unit.getHealth());
             this.id = id;
