@@ -293,26 +293,46 @@ public class ArmyWindow extends Application {
          * Method to delete a selected unit.
          */
         private void deleteUnit() {
-            Row selected = tableView.getSelectionModel().getSelectedItem();
-            army.remove(army.getUnits().get(selected.getId()));
-            editArmy();
+            if (tableView.getSelectionModel().getSelectedItem() == null) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Copy Unit");
+                alert.setHeaderText("No unit Selected!");
+                alert.setContentText("Please select a unit to copy.");
+
+                alert.showAndWait();
+            }
+            else {
+                Row selected = tableView.getSelectionModel().getSelectedItem();
+                army.remove(army.getUnits().get(selected.getId()));
+                editArmy();
+            }
         }
 
         /**
          * Method to copy a selected unit.
          */
         private void copyUnit() {
-            Row selected = tableView.getSelectionModel().getSelectedItem();
-            String name = selected.getName();
-            int hp = Integer.parseInt(selected.getHp());
-            String type = selected.getType() + "Unit";
-            Unit temp = type.equals("CommanderUnit") ? new CommanderUnit(name,hp) :
-                    type.equals("InfantryUnit") ? new InfantryUnit(name,hp) :
-                            type.equals("CavalryUnit") ? new CavalryUnit(name,hp) :
-                                    type.equals("RangedUnit") ? new RangedUnit(name,hp) : null;
+            if (tableView.getSelectionModel().getSelectedItem() == null) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Copy Unit");
+                alert.setHeaderText("No unit Selected!");
+                alert.setContentText("Please select a unit to copy.");
 
-            army.addUnit(temp);
-            editArmy();
+                alert.showAndWait();
+            }
+            else {
+                Row selected = tableView.getSelectionModel().getSelectedItem();
+                String name = selected.getName();
+                int hp = Integer.parseInt(selected.getHp());
+                String type = selected.getType() + "Unit";
+                Unit temp = type.equals("CommanderUnit") ? new CommanderUnit(name, hp) :
+                        type.equals("InfantryUnit") ? new InfantryUnit(name, hp) :
+                                type.equals("CavalryUnit") ? new CavalryUnit(name, hp) :
+                                        type.equals("RangedUnit") ? new RangedUnit(name, hp) : null;
+
+                army.addUnit(temp);
+                editArmy();
+            }
         }
 
         /**
