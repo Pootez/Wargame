@@ -225,6 +225,7 @@ public class Controller {
      * Handles the simulate button in BattlePane and starts simulation.
      *
      * @param battleBox BattleBox from BattlePane
+     * @param terrain Terrain from BattlePane ChoiceBox
      */
     public static void simulate(BattlePane.battleBox battleBox, Terrain terrain) {
         if (battle.getArmyOne().getName().equals("") || battle.getArmyTwo().getName().equals("")) {
