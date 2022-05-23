@@ -25,15 +25,8 @@ public class ArmiesPane extends BorderPane {
     public ArmiesPane () {
 
         // Create top buttons
-        Button exitBtn = new Button("Back");
-        exitBtn.setOnAction(actionEvent -> Controller.armiesBackBtn());
-        exitBtn.setFont(Font.font(20));
-        exitBtn.setPadding(new Insets(5,30,5,30));
-
-        Button refreshBtn = new Button("Refresh");
-        refreshBtn.setOnAction(actionEvent -> Controller.updateArmyList());
-        refreshBtn.setFont(Font.font(20));
-        refreshBtn.setPadding(new Insets(5,30,5,30));
+        CustomButton exitBtn = new CustomButton("Back", event -> Controller.armiesBackBtn());
+        CustomButton refreshBtn = new CustomButton("Refresh", event -> Controller.updateArmyList());
 
         HBox buttonBar = new HBox();
         buttonBar.setAlignment(Pos.CENTER);
@@ -47,21 +40,15 @@ public class ArmiesPane extends BorderPane {
         this.setCenter(armyList);
 
         // Selection Buttons
-        Button viewArmyBtn = new Button("View/Edit");
-        viewArmyBtn.setOnAction(actionEvent -> {
+        CustomButton viewArmyBtn = new CustomButton("View/Edit", event -> {
             try {
                 Controller.viewArmy();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
-        viewArmyBtn.setFont(Font.font(20));
-        viewArmyBtn.setPadding(new Insets(5,30,5,30));
 
-        Button deleteArmyBtn = new Button("Delete");
-        deleteArmyBtn.setOnAction(actionEvent -> Controller.deleteArmy());
-        deleteArmyBtn.setFont(Font.font(20));
-        deleteArmyBtn.setPadding(new Insets(5,30,5,30));
+        CustomButton deleteArmyBtn = new CustomButton("Delete", event -> Controller.deleteArmy());
 
         HBox selectionBar = new HBox();
         selectionBar.setAlignment(Pos.CENTER);

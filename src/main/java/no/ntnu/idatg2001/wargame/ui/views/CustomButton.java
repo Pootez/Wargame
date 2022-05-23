@@ -4,7 +4,6 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.text.Font;
-import no.ntnu.idatg2001.wargame.ui.controllers.Controller;
 
 public class CustomButton extends Button{
     public CustomButton (String name, EventHandler e) {

@@ -88,15 +88,8 @@ public class BattlePane extends BorderPane {
         this.setCenter(vBox);
 
         // Create top buttons
-        Button exitBtn = new Button("Exit");
-        exitBtn.setOnAction(actionEvent -> Platform.exit());
-        exitBtn.setFont(Font.font(20));
-        exitBtn.setPadding(new Insets(5,30,5,30));
-
-        Button viewArmies = new Button("View Armies");
-        viewArmies.setOnAction(actionEvent -> Controller.viewArmiesBtnPress());
-        viewArmies.setFont(Font.font(20));
-        viewArmies.setPadding(new Insets(5,30,5,30));
+        CustomButton exitBtn = new CustomButton("Exit", event -> Platform.exit());
+        CustomButton viewArmies = new CustomButton("View Armies", event -> Controller.viewArmiesBtnPress());
 
         HBox buttonBar = new HBox();
         buttonBar.setAlignment(Pos.CENTER);
@@ -129,7 +122,7 @@ public class BattlePane extends BorderPane {
 
             Slider speedSlider = new Slider(0,100,50);
             Label speedLabel = new Label("Speed: " + String.valueOf(speedSlider.valueProperty().getValue().intValue()));
-            speedLabel.setFont(Font.font(10));
+            speedLabel.setFont(Font.font(12));
 
             speedSlider.valueProperty().addListener(new ChangeListener<Number>() {
 
@@ -139,9 +132,7 @@ public class BattlePane extends BorderPane {
                 }
             });
 
-            Button simulateBtn = new Button("Simulate");
-            simulateBtn.setOnAction(actionEvent -> Controller.simulate(this));
-            simulateBtn.setPadding(new Insets(5,30,5,30));
+            CustomButton simulateBtn = new CustomButton("Simulate", event -> Controller.simulate(this));
 
             this.getChildren().addAll(speedLabel,speedSlider,simulateBtn);
 
@@ -153,9 +144,7 @@ public class BattlePane extends BorderPane {
         public void midBattle() {
             this.getChildren().clear();
 
-            Button cancelBtn = new Button("Cancel");
-            cancelBtn.setOnAction(actionEvent -> Controller.cancelSimulation(this));
-            cancelBtn.setPadding(new Insets(5,30,5,30));
+            CustomButton cancelBtn = new CustomButton("Cancel", event -> Controller.cancelSimulation(this));
 
             this.getChildren().add(cancelBtn);
         }
@@ -178,15 +167,13 @@ public class BattlePane extends BorderPane {
                 }
             });
 
-            Button simulateBtn = new Button("Simulate");
-            simulateBtn.setOnAction(actionEvent -> Controller.simulate(this));
-            simulateBtn.setPadding(new Insets(5,30,5,30));
+            CustomButton simulateBtn = new CustomButton("Simulate", event -> Controller.simulate(this));
+            CustomButton previousWinnerBtn = new CustomButton("Previous Winner", event -> Controller.viewpreviousWin());
 
-            Button previousWinnerBtn = new Button("Previous Winner");
-            previousWinnerBtn.setOnAction(actionEvent -> Controller.viewpreviousWin());
-            previousWinnerBtn.setPadding(new Insets(5,30,5,30));
+            HBox hBox = new HBox();
+            hBox.getChildren().addAll(simulateBtn,previousWinnerBtn);
 
-            this.getChildren().addAll(speedLabel,speedSlider,simulateBtn,previousWinnerBtn);
+            this.getChildren().addAll(speedLabel,speedSlider,hBox);
 
         }
     }
