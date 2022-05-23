@@ -6,9 +6,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
@@ -70,8 +72,9 @@ public class ArmyWindow extends Application {
 
     private class ArmyPane extends BorderPane {
 
-        private TableView<Row> tableView;
         private Stage stage;
+        private TableView<Row> tableView;
+        private TextField nameField;
 
         public ArmyPane (Stage stage) {
             this.stage = stage;
@@ -107,7 +110,15 @@ public class ArmyWindow extends Application {
 
             HBox buttonBar = new HBox();
             buttonBar.getChildren().addAll(addUnitsBtn, deleteUnitsBtn, textFlow);
-            this.setTop(buttonBar);
+
+            Label nameLabel = new Label("Army Name: ");
+            nameField = new TextField(army.getName());
+            HBox armyNameText = new HBox();
+            armyNameText.getChildren().addAll(nameLabel, nameField);
+
+            VBox vBox = new VBox();
+            vBox.getChildren().addAll(armyNameText, buttonBar);
+            this.setBottom(vBox);
 
             // Create center table
             tableView.getItems().clear();
@@ -122,14 +133,14 @@ public class ArmyWindow extends Application {
 
             // Create Bottom Buttons
             CustomButton saveBtn = new CustomButton("Save", event -> save());
-            CustomButton deleteBtn = new CustomButton("Delete File", event -> delete());
             CustomButton changeNameBtn = new CustomButton("Change File Name", event -> changeName());
+            CustomButton deleteBtn = new CustomButton("Delete File", event -> delete());
             CustomButton cancelBtn = new CustomButton("Cancel", event -> cancel());
 
-            HBox bottom = new HBox();
-            bottom.setAlignment(Pos.CENTER);
-            bottom.getChildren().addAll(saveBtn, deleteBtn, changeNameBtn, cancelBtn);
-            this.setBottom(bottom);
+            HBox top = new HBox();
+            top.setAlignment(Pos.CENTER);
+            top.getChildren().addAll(saveBtn, changeNameBtn, deleteBtn, cancelBtn);
+            this.setTop(top);
         }
 
         private void addUnits() {
@@ -143,6 +154,9 @@ public class ArmyWindow extends Application {
         }
 
         private void save() {
+            army.setName(nameField.getText());
+            FileHandler.writeArmyCSV(army, Controller.getSaveDir() + "/" + fileName + ".csv");
+            Controller.updateArmyList();
             //TODO Add dialog
         }
 
@@ -151,7 +165,7 @@ public class ArmyWindow extends Application {
         }
 
         public void changeName() {
-
+            //TODO Add dialog
         }
 
         private void cancel() {

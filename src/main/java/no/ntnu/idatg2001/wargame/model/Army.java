@@ -129,6 +129,15 @@ public class Army {
     }
 
     /**
+     * Sets name of army.
+     *
+     * @param name String of new name
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
      * Retrieves all ranged units from an army.
      *
      * @return List of ranged units in an army
