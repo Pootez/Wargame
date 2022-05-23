@@ -80,7 +80,7 @@ public class Controller {
     /**
      * Opens the selected army within ArmiesPane.
      */
-    public static void viewArmy() throws Exception {
+    public static void viewArmy() {
         if (armyList.getSelectionModel().getSelectedIndex() < 0) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("View/Edit Army");
@@ -96,7 +96,11 @@ public class Controller {
                     .get(armyList.getSelectionModel().getSelectedIndex());
             String fileName = fileNameCsv.substring(0, fileNameCsv.length() - 4);
 
-            new ArmyWindow(fileName).start(new Stage());
+            try {
+                new ArmyWindow(fileName).start(new Stage());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -292,6 +296,9 @@ public class Controller {
         gc.fillText(battle.getArmyTwo().getName(),200,225);
     }
 
+    /**
+     * Draws the previous winner after a simulation ends, before new armies are picked.
+     */
     public static void drawWinner() {
         gc.setFill(Color.BLACK);
         gc.fillRect(0,0,400,300);
@@ -345,6 +352,11 @@ public class Controller {
         armyList = list;
     }
 
+    /**
+     * Adds the SpeedSlider in the BattlePane for observer functionality.
+     *
+     * @param speedSlider SpeedPane from BattlePane
+     */
     public static void setSpeed(Slider speedSlider) {
         speed = speedSlider;
     }

@@ -38,17 +38,33 @@ public class ArmyWindow extends Application {
     private String fileName;
     private Army army;
 
+    /**
+     * Constructor for an existing army file.
+     *
+     * @param fileName fileName to be viewed
+     */
     public ArmyWindow (String fileName) {
         this.fileName = fileName;
         army = FileHandler.readArmyCSV(Controller.getSaveDir() + "/" + fileName + ".csv");
 
     }
 
+    /**
+     * Constructor for an army object and its fileName.
+     *
+     * @param fileName String fileName
+     * @param army Army to be viewed
+     */
     public ArmyWindow (String fileName, Army army) {
         this.fileName = fileName;
         this.army = army;
     }
 
+    /**
+     * Container for main.
+     *
+     * @param args String of arguments
+     */
     public static void main(String[] args) {
         launch(args);
     }
@@ -76,12 +92,20 @@ public class ArmyWindow extends Application {
         stage.show();
     }
 
+    /**
+     * BorderPane with methods to switch out and manage its elements.
+     */
     private class ArmyPane extends BorderPane {
 
         private Stage stage;
         private TableView<Row> tableView;
         private TextField nameField;
 
+        /**
+         * Constructor, takes a stage to later close the window.
+         *
+         * @param stage Stage of window
+         */
         public ArmyPane (Stage stage) {
             this.stage = stage;
             tableView = new TableView<>();
@@ -100,6 +124,9 @@ public class ArmyWindow extends Application {
             editArmy();
         }
 
+        /**
+         * Sets up the main page for editing an army.
+         */
         public void editArmy() {
             // Create top buttons
             CustomButton addUnitsBtn = new CustomButton("Add Units", event -> addUnits());
@@ -153,6 +180,9 @@ public class ArmyWindow extends Application {
             this.setTop(top);
         }
 
+        /**
+         * Gives a dialog for creating a number of units given type, name and health.
+         */
         private void addUnits() {
             Dialog<List<Unit>> dialog = new Dialog<>();
             dialog.setTitle("Add Units");
@@ -261,12 +291,18 @@ public class ArmyWindow extends Application {
             }
         }
 
+        /**
+         * Method to delete a selected unit.
+         */
         private void deleteUnit() {
             Row selected = tableView.getSelectionModel().getSelectedItem();
             army.remove(army.getUnits().get(selected.getId()));
             editArmy();
         }
 
+        /**
+         * Method to copy a selected unit.
+         */
         private void copyUnit() {
             Row selected = tableView.getSelectionModel().getSelectedItem();
             String name = selected.getName();
@@ -281,6 +317,9 @@ public class ArmyWindow extends Application {
             editArmy();
         }
 
+        /**
+         * Method to save the current army to the current file.
+         */
         private void save() {
             army.setName(nameField.getText());
             FileHandler.writeArmyCSV(army, Controller.getSaveDir() + "/" + fileName + ".csv");
@@ -294,6 +333,9 @@ public class ArmyWindow extends Application {
             alert.showAndWait();
         }
 
+        /**
+         * Method to delete the current file.
+         */
         private void delete() {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Delete File");
@@ -320,6 +362,9 @@ public class ArmyWindow extends Application {
             }
         }
 
+        /**
+         * Method to change the fileName of the army.
+         */
         public void changeName() {
             TextInputDialog dialog = new TextInputDialog(fileName);
             dialog.setTitle("Changing file name");
@@ -331,6 +376,9 @@ public class ArmyWindow extends Application {
             editArmy();
         }
 
+        /**
+         * Method to exit the window without saving, giving a dialog in case of error.
+         */
         private void cancel() {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Cancel");
@@ -344,6 +392,9 @@ public class ArmyWindow extends Application {
         }
     }
 
+    /**
+     * Class with properties specialized for the TableView.
+     */
     public class Row {
 
         private String type;
@@ -351,6 +402,12 @@ public class ArmyWindow extends Application {
         private String hp;
         private int id;
 
+        /**
+         * Constructor for a TableView Row.
+         *
+         * @param unit Unit to be entered into table
+         * @param id int index of unit within its army
+         */
         public Row (Unit unit, int id) {
             type = unit.getClass().getSimpleName().substring(0, unit.getClass().getSimpleName().length() - 4);
             name = unit.getName();
@@ -358,18 +415,34 @@ public class ArmyWindow extends Application {
             this.id = id;
         }
 
+        /**
+         * Returns the type of unit in a TableView row.
+         * @return String of type without "Unit"
+         */
         public String getType() {
             return type;
         }
 
+        /**
+         * Returns the type of name in a TableView row.
+         * @return String of name
+         */
         public String getName() {
             return name;
         }
 
+        /**
+         * Returns the hp of a unit of a TableView row.
+         * @return int of hp
+         */
         public String getHp() {
             return hp;
         }
 
+        /**
+         * Returns the index of a unit of a TableView row.
+         * @return int index of the unit in its army
+         */
         public int getId() {
             return id;
         }
