@@ -50,4 +50,9 @@ public class MainWindow extends Application {
         // Display window
         stage.show();
     }
+
+    @Override
+    public void stop() {
+        Controller.setSimRunning(false);
+    }
 }

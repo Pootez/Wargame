@@ -67,6 +67,12 @@ public class Army {
         }
     }
 
+    public void attack(Army army) {
+        for (Unit unit : units) {
+            unit.attack(army);
+        }
+    }
+
     /**
      * @param unit Unit to add
      * @return True if unit was successfully added

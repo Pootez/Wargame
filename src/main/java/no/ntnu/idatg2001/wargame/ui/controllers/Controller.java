@@ -9,10 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import no.ntnu.idatg2001.wargame.model.Army;
-import no.ntnu.idatg2001.wargame.model.Battle;
-import no.ntnu.idatg2001.wargame.model.FileHandler;
-import no.ntnu.idatg2001.wargame.model.Terrain;
+import no.ntnu.idatg2001.wargame.model.*;
 import no.ntnu.idatg2001.wargame.ui.views.ArmiesPane;
 import no.ntnu.idatg2001.wargame.ui.views.ArmyWindow;
 import no.ntnu.idatg2001.wargame.ui.views.BattlePane;
@@ -41,6 +38,7 @@ public class Controller {
 
     private static Scene scene;
     private static GraphicsContext gc;
+    private static BattlePane.BattleBox battleBox;
     private static List<ListView> mainListViews;
     private static ListView<String> armyList;
     private static Slider speed;
@@ -63,6 +61,7 @@ public class Controller {
      * Button to switch from battle pane to armies pane.
      */
     public static void viewArmiesBtnPress() {
+        simRunning = false;
         scene.setRoot(new ArmiesPane());
     }
 
@@ -250,7 +249,7 @@ public class Controller {
      * @param battleBox BattleBox from BattlePane
      * @param terrain Terrain from BattlePane ChoiceBox
      */
-    public static void simulate(BattlePane.battleBox battleBox, Terrain terrain) {
+    public static void simulate(BattlePane.BattleBox battleBox, Terrain terrain) {
         if (battle.getArmyOne().getName().equals("") || battle.getArmyTwo().getName().equals("")) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Simulate");
@@ -260,18 +259,22 @@ public class Controller {
             alert.showAndWait();
         }
         else {
-            if (speed.getValue() < 1) {
-                previousWinner = battle.simulate(terrain);
-                battleBox.postBattle();
-                if (previousWinner == null) {
-                    drawPreBattle();
-                }
-            }
-            else {
-                //TODO implement actual sim
-                simRunning = true;
-                battleBox.midBattle();
-            }
+            SimulationThread sim = new SimulationThread(battle, terrain, (int)speed.getValue());
+            simRunning = true;
+            battleBox.midBattle();
+            sim.run();
+        }
+    }
+
+    public static void simWinner(Army army) {
+        simRunning = false;
+        previousWinner = army;
+        battleBox.postBattle();
+        if (previousWinner == null) {
+            drawPreBattle();
+        }
+        else {
+            drawWinner();
         }
     }
 
@@ -280,7 +283,7 @@ public class Controller {
      *
      * @param battleBox BattleBox from BattlePane
      */
-    public static void cancelSimulation(BattlePane.battleBox battleBox) {
+    public static void cancelSimulation(BattlePane.BattleBox battleBox) {
         clearBattle();
         simRunning = false;
         battleBox.preBattle();
@@ -385,6 +388,18 @@ public class Controller {
      */
     public static void setSpeed(Slider speedSlider) {
         speed = speedSlider;
+    }
+
+    public static void setSimRunning (boolean bool) {
+        simRunning = bool;
+    }
+
+    public static void setBattleBox(BattlePane.BattleBox box) {
+        battleBox = box;
+    }
+
+    public static boolean getSimRunning () {
+        return simRunning;
     }
 
     /**

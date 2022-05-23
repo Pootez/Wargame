@@ -11,8 +11,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Box;
 import javafx.scene.text.Font;
+import no.ntnu.idatg2001.wargame.model.Battle;
 import no.ntnu.idatg2001.wargame.model.Terrain;
 import no.ntnu.idatg2001.wargame.ui.controllers.Controller;
 
@@ -97,18 +97,20 @@ public class BattlePane extends BorderPane {
         buttonBar.getChildren().addAll(exitBtn, viewArmies);
         this.setTop(buttonBar);
 
-        vBox.getChildren().add(new battleBox());
+        BattleBox battleBox = new BattleBox();
+        Controller.setBattleBox(battleBox);
+        vBox.getChildren().add(battleBox);
     }
 
     /**
      * Vbox to hold controls for the battle, contains methods for changing its own content.
      */
-    public class battleBox extends VBox {
+    public class BattleBox extends VBox {
 
         /**
          * Constructor for BattleBox. Sets up format.
          */
-        public battleBox() {
+        public BattleBox() {
             this.setAlignment(Pos.TOP_CENTER);
             this.setSpacing(5);
 
