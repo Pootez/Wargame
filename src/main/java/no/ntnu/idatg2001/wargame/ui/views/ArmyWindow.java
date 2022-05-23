@@ -3,10 +3,7 @@ package no.ntnu.idatg2001.wargame.ui.views;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -16,6 +13,9 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import no.ntnu.idatg2001.wargame.model.*;
 import no.ntnu.idatg2001.wargame.ui.controllers.Controller;
+
+import java.io.File;
+import java.util.Optional;
 
 /**
  * Window for viewing and editing an army file.
@@ -173,20 +173,60 @@ public class ArmyWindow extends Application {
             army.setName(nameField.getText());
             FileHandler.writeArmyCSV(army, Controller.getSaveDir() + "/" + fileName + ".csv");
             Controller.updateArmyList();
-            //TODO Add dialog
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Save");
+            alert.setHeaderText(null);
+            alert.setContentText("Your file has been saved!");
+
+            alert.showAndWait();
         }
 
         private void delete() {
-            //TODO Add dialog
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete File");
+            alert.setHeaderText("You are about to delete: " + fileName);
+            alert.setContentText("Are you ok with this?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK){
+                File f = new File(Controller.getSaveDir() + "/" + fileName + ".csv");
+                if (f.exists()) {
+                    f.delete();
+                }
+                else {
+                    Alert err = new Alert(Alert.AlertType.ERROR);
+                    err.setTitle("Error Dialog");
+                    err.setHeaderText("File does not exist!");
+                    err.setContentText("Check {HOME}/Documents/WargameArmies for saved files.");
+                    return;
+                }
+                Controller.updateArmyList();
+                stage.close();
+            }
         }
 
         public void changeName() {
-            //TODO Add dialog
+            TextInputDialog dialog = new TextInputDialog(fileName);
+            dialog.setTitle("Changing file name");
+            dialog.setHeaderText("Changing file name from: " + fileName);
+            dialog.setContentText("Enter new file name: ");
+
+            Optional<String> result = dialog.showAndWait();
+            result.ifPresent(name -> fileName = result.get());
+            editArmy();
         }
 
         private void cancel() {
-            //TODO Add dialog
-            stage.close();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Cancel");
+            alert.setHeaderText("You are leaving the file: " + fileName);
+            alert.setContentText("Unsaved changes will ble lost.");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK){
+                stage.close();
+            }
         }
     }
 
