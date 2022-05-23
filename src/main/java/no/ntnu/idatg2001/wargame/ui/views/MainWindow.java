@@ -31,10 +31,10 @@ public class MainWindow extends Application {
     /**
      * Starts the application.
      *
-     * @param primaryStage Primary Stage for the Application
+     * @param stage Primary Stage for the Application
      */
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage stage) throws IOException {
         // Initialize controller
         controller = new Controller();
 
@@ -42,12 +42,12 @@ public class MainWindow extends Application {
         Scene scene = new Scene(new BattlePane());
         Controller.setScene(scene);
         scene.getStylesheets().add(this.getClass().getResource("/stylesheet.css").toExternalForm());
-        primaryStage.setScene(scene);
+        stage.setScene(scene);
 
         // Set title
-        primaryStage.setTitle("Wargame");
+        stage.setTitle("Wargame");
 
         // Display window
-        primaryStage.show();
+        stage.show();
     }
 }
