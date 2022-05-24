@@ -74,6 +74,9 @@ public class Controller {
         scene.setRoot(new BattlePane());
     }
 
+    /**
+     * Handles the new army buttons when viewing armies. Creates a new army.
+     */
     public static void newArmy() {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("New Army");
@@ -266,6 +269,11 @@ public class Controller {
         }
     }
 
+    /**
+     * Set the winner army from the simulation.
+     *
+     * @param army Army winner, null if none
+     */
     public static void simWinner(Army army) {
         simRunning = false;
         previousWinner = army;
@@ -350,6 +358,11 @@ public class Controller {
         Controller.gc = gc;
     }
 
+    /**
+     * Get the graphical context of the canvas.
+     *
+     * @return GraphicsContext of canvas
+     */
     public static GraphicsContext getGc() {
         return gc;
     }
@@ -396,14 +409,29 @@ public class Controller {
         speed = speedSlider;
     }
 
+    /**
+     * Set if the simulation is running
+     *
+     * @param bool boolean
+     */
     public static void setSimRunning (boolean bool) {
         simRunning = bool;
     }
 
+    /**
+     * Add the battle window controls for observer functionality.
+     *
+     * @param box BattleBox from BattlePane
+     */
     public static void setBattleBox(BattlePane.BattleBox box) {
         battleBox = box;
     }
 
+    /**
+     * Returns if the simulation is currently running.
+     *
+     * @return boolean
+     */
     public static boolean getSimRunning () {
         return simRunning;
     }
