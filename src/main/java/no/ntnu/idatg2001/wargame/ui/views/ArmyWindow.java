@@ -113,7 +113,7 @@ public class ArmyWindow extends Application {
             TableColumn<Row, String> nameColumn = new TableColumn<>("Name");
             nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-            TableColumn<Row, String> hpColumn = new TableColumn<>("Unit Health");
+            TableColumn<Row, String> hpColumn = new TableColumn<>("Health");
             hpColumn.setCellValueFactory(new PropertyValueFactory<>("hp"));
 
             tableView.getColumns().addAll(typeColumn, nameColumn, hpColumn);
