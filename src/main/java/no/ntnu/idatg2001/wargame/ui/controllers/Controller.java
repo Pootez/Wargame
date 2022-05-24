@@ -42,6 +42,7 @@ public class Controller {
     private static List<ListView> mainListViews;
     private static ListView<String> armyList;
     private static Slider speed;
+    private static ChoiceBox choiceBox;
 
     /**
      * Constructor for the controller. Initializes variables.
@@ -250,10 +251,8 @@ public class Controller {
 
     /**
      * Handles the simulate button in BattlePane and starts simulation.
-     *
-     * @param terrain Terrain from BattlePane ChoiceBox
      */
-    public static void simulate(Terrain terrain) {
+    public static void simulate() {
         if (battle.getArmyOne().getName().equals("") || battle.getArmyTwo().getName().equals("")) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Simulate");
@@ -265,7 +264,9 @@ public class Controller {
         else {
             simRunning = true;
             battleBox.midBattle();
-            new SimulationThread(battle, terrain, (int)speed.getValue());
+            new SimulationThread(battle,
+                    Terrain.valueOf(choiceBox.getSelectionModel().getSelectedItem().toString())
+                    , (int)speed.getValue());
         }
     }
 
@@ -320,12 +321,33 @@ public class Controller {
         }
     }
 
+    public static void drawBackground() {
+        Terrain terrain = choiceBox == null ?
+                Terrain.NONE :
+                Terrain.valueOf(choiceBox.getSelectionModel().getSelectedItem().toString());
+
+        switch (terrain) {
+            case PLAINS:
+                gc.setFill(Color.GREEN);
+                break;
+            case HILLS:
+                gc.setFill(Color.GREY);
+                break;
+            case FOREST:
+                gc.setFill(Color.DARKGREEN);
+                break;
+            case NONE:
+                gc.setFill(Color.BLACK);
+                break;
+        }
+        gc.fillRect(0,0,400,300);
+    }
+
     /**
      * Draw pre-battle information to the canvas in battle pane.
      */
     public static void drawPreBattle() {
-        gc.setFill(Color.BLACK);
-        gc.fillRect(0,0,400,300);
+        drawBackground();
 
         gc.setFill(Color.WHITE);
         gc.setFont(Font.font("Tahoma",40));
@@ -425,6 +447,15 @@ public class Controller {
      */
     public static void setBattleBox(BattlePane.BattleBox box) {
         battleBox = box;
+    }
+
+    /**
+     * Sets the choice box to know what is selected
+     *
+     * @param box ChoiceBox from BattlePane
+     */
+    public static void setChoiceBox(ChoiceBox box) {
+        choiceBox = box;
     }
 
     /**

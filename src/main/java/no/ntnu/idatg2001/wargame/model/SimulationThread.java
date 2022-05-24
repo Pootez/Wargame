@@ -96,8 +96,7 @@ public class SimulationThread {
     }
 
     private void draw() {
-        gc.setFill(Color.BLACK);
-        gc.fillRect(0,0,400,300);
+        Controller.drawBackground();
 
         gc.setFill(Color.BLUE);
         for (Unit unit : army1.getUnits()){

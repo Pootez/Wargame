@@ -138,9 +138,16 @@ public class BattlePane extends BorderPane {
             ChoiceBox choiceBox = new ChoiceBox();
             choiceBox.getItems().setAll(Terrain.values());
             choiceBox.getSelectionModel().selectFirst();
+            Controller.setChoiceBox(choiceBox);
+            choiceBox.valueProperty().addListener(new ChangeListener<Terrain>() {
 
-            CustomButton simulateBtn = new CustomButton("Simulate", event -> Controller.simulate(
-                    Terrain.valueOf(choiceBox.getSelectionModel().getSelectedItem().toString())));
+                @Override
+                public void changed(ObservableValue<? extends Terrain> observableValue, Terrain oldValue, Terrain newValue) {
+                    Controller.drawPreBattle();
+                }
+            });
+
+            CustomButton simulateBtn = new CustomButton("Simulate", event -> Controller.simulate());
 
             this.getChildren().addAll(speedLabel, speedSlider, choiceBox, simulateBtn);
         }
@@ -180,9 +187,16 @@ public class BattlePane extends BorderPane {
             ChoiceBox choiceBox = new ChoiceBox();
             choiceBox.getItems().setAll(Terrain.values());
             choiceBox.getSelectionModel().selectFirst();
+            Controller.setChoiceBox(choiceBox);
+            choiceBox.valueProperty().addListener(new ChangeListener<Terrain>() {
 
-            CustomButton simulateBtn = new CustomButton("Simulate", event -> Controller.simulate(
-                    Terrain.valueOf(choiceBox.getSelectionModel().getSelectedItem().toString())));
+                @Override
+                public void changed(ObservableValue<? extends Terrain> observableValue, Terrain oldValue, Terrain newValue) {
+                    Controller.drawPreBattle();
+                }
+            });
+
+            CustomButton simulateBtn = new CustomButton("Simulate", event -> Controller.simulate());
             CustomButton previousWinnerBtn = new CustomButton("Previous Winner", event -> Controller.viewPreviousWin());
 
             HBox hBox = new HBox();
