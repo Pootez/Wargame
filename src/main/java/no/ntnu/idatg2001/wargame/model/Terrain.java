@@ -10,9 +10,9 @@ package no.ntnu.idatg2001.wargame.model;
 
 public enum Terrain {
 
-    PLAINS,
+    NONE,
     FOREST,
     HILLS,
-    NONE
+    PLAINS
 
 }

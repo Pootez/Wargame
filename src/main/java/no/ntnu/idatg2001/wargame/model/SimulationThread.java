@@ -100,11 +100,11 @@ public class SimulationThread {
 
         gc.setFill(Color.BLUE);
         for (Unit unit : army1.getUnits()){
-            gc.fillArc(unit.getX(), unit.getY(), 5, 5, 0, 360, ArcType.ROUND);
+            gc.fillArc(unit.getX(), unit.getY(), 8, 8, 0, 360, ArcType.ROUND);
         }
         gc.setFill(Color.ORANGE);
         for (Unit unit : army2.getUnits()){
-            gc.fillArc(unit.getX(), unit.getY(), 5, 5, 0, 360, ArcType.ROUND);
+            gc.fillArc(unit.getX(), unit.getY(), 8, 8, 0, 360, ArcType.ROUND);
         }
     }
 
