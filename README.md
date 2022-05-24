@@ -11,6 +11,10 @@
 4. Implementasjon
 5. Prosess
 6. Refleksjon
+   1. Design
+   2. Implementasjon
+   3. Prosess
+   4. Resultat
 7. Konklusjon
 
 
@@ -19,8 +23,9 @@
 
 ## Kravspesifikasjon
 Oppgaven var gitt ut i 3 deler utover semesteret.
-Hver del hadde rundt 5 del-oppgaver som ledet gjennom utviklingen av programmet.
+Hver del hadde rundt 4 del-oppgaver som ledet gjennom utviklingen av programmet.
 Delene under beskriver kravene for hver av oppgavene.
+Alle kravene er oppfylt av programmet/prosjektet.
 
 * Enhetstesting
   * Enhetstester må opprettes for delen av koden som er sentralt for å oppfylle sentrale krav.
@@ -49,11 +54,11 @@ Delene under beskriver kravene for hver av oppgavene.
     De skal implementere abstrakte klasser for individuelle bonuser.
     Disse bonusene kan i enkelte tilfeller ha spesiel logikk.
 * Army-klassen
-  * En arme skal være en klasse for å samle og håndtere en liste med enheter.
+  * En armé skal være en klasse for å samle og håndtere en liste med enheter.
     Klassen skal implementere metoder som blir brukbar for senere simulering/kamp.
 * Simulering av et slag med klassen Battle
   * Implementere en klasse for å holde på to armeer og utføre en simulering.
-    Tilfeldige enheter skal angripe hverandre og fjernes ved 0 hp, til en arme er tom.
+    Tilfeldige enheter skal angripe hverandre og fjernes ved 0 hp, til en armé er tom.
 
 ### Del 2
 * Versjonskontroll med git
@@ -81,6 +86,56 @@ Delene under beskriver kravene for hver av oppgavene.
 * Videre arbeid
   * Oppfordring for å være kreativ å implementere videre.
 
+### Programmet
+På hver side i programmet er knapper for å navigere seg tilbake eller til en annen side.
+Armé filer er inntil nå lagret under %HOME%/Documents/WargameArmies.
+Denne lagrings-posisjonen kan ved nødvendighet endres i Controller klassen.
+Programmet bruker et mørkt [stylesheet](https://github.com/joffrey-bion/javafx-themes/blob/master/css/modena_dark.css)
+basert på [modena.css](https://gist.github.com/maxd/63691840fc372f22f470).
+
+* Hovedside for simulering
+
+![](images/mainWindow.png)
+  * Ved åpningen av programmet presenteres man med en hovedside der simuleringer av programmet pågår. 
+  * Utvalg av armeer for simulering en gjort ved å klikke på to lister av lagrede filer på hver side av vinduet. 
+  * I midten av vinduet blir utvalget presentert ved armé navnene i et canvas.
+    Under er en gruppe med kontroller med egenskaper til å endre simulerings-hastigheten og terrenget.
+    Når man klikker simuleringsknappen med 0 hastighet kjører den orginale simulerings-metoden
+    og presenterer vinner-armeens navn til skjermen.
+    Hvis en tidligere vinner er tilgjengelig vil en knapp være tilgjengelig for å åpne et vindu av den resterende
+    armeen, som kan videre redigeres eller lagres.
+    En vanlig simulering vil animeres der armeene plasseres tilfeldig på hver side der hver enhet nærmer seg og
+    angriper den nærmeste fiendtlige enheten til en armé gjenstår.
+---
+* Arme oversikt
+
+![](images/armiesWindow.png)
+  * "View Armies" knappen tar deg til en side med liste av de tilgjengelige filene med armeer.
+    Hver armé vises med filnavn, arménavn og antall enheter.
+  * Om man gjør et utvalg av armé har man valg mellom å "Edit/View" eller "Delete".
+    "Delete" sletter fila fra lagring. Knapper i programmet som har en effekt som er vanskelig å reversere
+    skaper en dialog boks for å forsikre valget.
+    "Edit/View" kan alternativt brukes ved å dobbelklikke på en armé i lista, 
+    dette åpner et seperat vindu som viser armeén.
+    "New Army" knappen vil først spørre deg om et filnavn, for så å opprette ett nytt "armé-vindu" med en tom armé.
+---
+  * Armé vindu
+
+    ![](images/armyWindow.png)
+    * Armé vinduet har en tilknyttet armé og filnavn. Øverst har du valg mellom knappene
+      "Save", "Change File Name", "Delete File" og "Cancel", alle med responsive dialoger.
+      Ending av filnavnet gjør det mulig å lage en kopi av armeen.
+    * Tabellen i midten er sorterbar etter enhetens type, navn og helse.
+      Armé navnet kan endres mot bunnen av vinduet.
+    * "Delete Unit" og "Copy Unit" påvirker den for øyeblikkede valgte enheten.
+      Disse knappene forårsaker ikke dialoger for å gjøre redigering av armeen lettere,
+      med mindre ingen enheter er utvalg, da gis en advarsel til brukeren.
+      "Add Units" knappen åpner en dialog med utvalget for en UnitFactory.
+    * Ameer åpnes i et seperat vindu for å kunne arbeide med flere armeer og simulering samtidig.
+      "Save" knappen oppdaterer relevante lister i hovedvinduet ved å utnytte Observer mønsteret.
+
+---
+
 ## Design
 
 
@@ -88,10 +143,31 @@ Delene under beskriver kravene for hver av oppgavene.
 
 
 ## Prosess
-#### "Du dømmer ikke din nestes commit tider"
 
 
 ## Refleksjon
+### Design
+
+
+### Implementasjon
+
+
+### Prosess
+#### "Du dømmer ikke din nestes commit tider"
+Gjennom prosjektet utførte jeg oppgavene i nærhet innleverings-dato. I mitt tilfelle, jobber jeg ofte bedre i
+De klare svakhetene ved denne prosessen er hjernen får mindre mulighet til å hvile,
+som kan gjøre egenskapen for problemløsning værre.
+Ofte er det gunstig å ta et pause fra et problem, hjernen får hvile og problemet kan bli sett fra nye vinkler.
+
+Jeg føler personlig jeg ofte jobber med ny informasjon bedre når jeg søker den ut og bearbeider det aktivt
+gjennom problemløsning.
+Samt, med en opplastet forelesning er det ofte mulig å uthente viktig informasjon fortere.
+Baksiden med dette er at man kan gå glipp av informasjon som kan forårsake unødvendige "troubleshooting"
+i utviklingen, og det er derfor viktig å praktisere og få erfaring konseptene.
+I tilfelle av vårt fag, var forelesningene og opplastningene av dem, grunnet en dyktig foreleser/emneansvarlig,
+veldig oversiktlig strukturert. Nødvendig informasjon var altså lett tilgjengelig i etterkant.
+
+### Resultat
 
 
 ## Konklusjon
