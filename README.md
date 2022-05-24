@@ -98,7 +98,7 @@ Alle kravene er oppfylt av programmet/prosjektet.
 * Videre arbeid
   * Oppfordring for å være kreativ å implementere videre.
 
-### Programmet
+### Programmet / Brukstilfeller
 På hver side i programmet er knapper for å navigere seg tilbake eller til en annen side.
 Armé filer er inntil nå lagret under %HOME%/Documents/WargameArmies.
 Denne lagrings-posisjonen kan ved nødvendighet endres i Controller klassen.
@@ -155,29 +155,67 @@ basert på [modena.css](https://gist.github.com/maxd/63691840fc372f22f470).
 
 
 ## Prosess
+Gjennom prosjektet har jeg jobbet i lengre intervaller i nærheten av innleveringsfrist,
+etter mest relevant stoff i emnet var gjennomgått.
+Mot del 3 tok jeg i bruk
+[GitLabs kanban-tavle](https://git.gvk.idi.ntnu.no/course/idatg2001/idatg2001-2022-ws/sondesp/wargame3/-/boards).
+Dette var praktisk for å holde styr på hvilke ting som måtte bli gjort, og hvilke som var fokusert.
+Regelmessige commits gjorde også at jeg oftere fokuserte på en implementering om gangen.
 
+Emnets forelesninger var den viktigste ressursen, selv om jeg oftest ikke møtte opp fysisk.
+Presentasjonene forklarte bra bort konseptene og om jeg hadde spørsmål om implementeringen,
+så jeg videre på demoene.
+Enkelte nettsider var praktiske i dette spesifikke prosjektet;
+* [Baeldung](https://www.baeldung.com/javafx) for ulike javaFX ressurser
+* [Stack overflow](https://stackoverflow.com/), spesielt for problemer relatert til Thread implementering
+* [JavaFX API](https://docs.oracle.com/javase/8/javafx/api/javafx/stage/Window.html)
 
 ## Refleksjon
 ### Design
 
 
 ### Implementasjon
+I det andre utviklingsprosjektet vårt dette semesteret, der vi var 3 på gruppa,
+ble arbeidsmengden delt inn i "model-controller-view" fordelt på vært medlem.
+I dette tilfelle fikk jeg ansvaret for modellen og lite erfaring med javaFX delen av programmet.
+Dette resulterer i at jeg er komfortabel med model-bygging og filhåndtering for ".csv",
+men lite kjenskap til javaFX.
+I prosjektet valgte jeg derfor å skrive javaFX manuelt i stedet for å bruke FXML,
+for å bedre få erfaring med oppbygningen av strukturene av en applikasjon.
+Dette valget resulte i at enkelte funksjonaliteter er dårligere implementert, og svekker coupling og coheision.
+Enkelte klasser kunne vært bedre abstrahert,
+og det er en synlig forskjell mellom strukturen i modellen og resten av programmet.
 
+Likevel føler jeg funksjonaliteten ble bra;
+* Implementasjonen av "observere" ved lister gjør at man flexibelt teste armé-simuleringer
+  samtidig som man redigerer armeene.
+* Oppdateringen av vindu-elementer.
+  * Hovedvinduet roterer mellom bruk av to klasser som utvider BorderPane,
+    slik at du kan bytte mellom å jobbe mellom to arbeidsområder.
+  * BattlePane, som holder på elementene for simulerings-vinduet, hadde en tendens til å bli komplisert,
+    ettersom simulerings knappene ikke ville oppdattere seg i tilfelle det ble kalt fra en annen thread.
+* Simulasjonen var en feature jeg tidlig hadde lyst til å implementere.
+  Den bruker hovedsakelig kunnskap fra [javascript prosjekter](https://folk.ntnu.no/sondesp/) jeg har gjort,
+  den tidligere kortstokk oppgaven vi hadde, samt informasjon jeg fant om threads.
 
 ### Prosess
 #### "Du dømmer ikke din nestes commit tider"
-Gjennom prosjektet utførte jeg oppgavene i nærhet innleverings-dato. I mitt tilfelle, jobber jeg ofte bedre i
+Gjennom prosjektet utførte jeg oppgavene i nærhet innleverings-dato.
+Jeg har en tendens til å sette meg ned og programmere i lange intervaller for å holde meg målrettet og interessert
+i problemløsningen, som blir gunstigere med tidsbegrensning.
 De klare svakhetene ved denne prosessen er hjernen får mindre mulighet til å hvile,
 som kan gjøre egenskapen for problemløsning værre.
 Ofte er det gunstig å ta et pause fra et problem, hjernen får hvile og problemet kan bli sett fra nye vinkler.
 
-Jeg føler personlig jeg ofte jobber med ny informasjon bedre når jeg søker den ut og bearbeider det aktivt
+#### Bruk av forelesninger
+Jeg føler personlig jeg ofte jobber med ny informasjon bedre når jeg søker det ut og bearbeider det aktivt
 gjennom problemløsning.
 Samt, med en opplastet forelesning er det ofte mulig å uthente viktig informasjon fortere.
 Baksiden med dette er at man kan gå glipp av informasjon som kan forårsake unødvendige "troubleshooting"
 i utviklingen, og det er derfor viktig å praktisere og få erfaring konseptene.
 I tilfelle av vårt fag, var forelesningene og opplastningene av dem, grunnet en dyktig foreleser/emneansvarlig,
 veldig oversiktlig strukturert. Nødvendig informasjon var altså lett tilgjengelig i etterkant.
+Som mål til neste semester skal jeg uansett prøve å møte opp mer for en mer utfylt læringsopplevelse.
 
 ### Resultat
 
