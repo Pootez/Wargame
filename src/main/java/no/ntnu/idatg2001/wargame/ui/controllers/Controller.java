@@ -248,10 +248,9 @@ public class Controller {
     /**
      * Handles the simulate button in BattlePane and starts simulation.
      *
-     * @param battleBox BattleBox from BattlePane
      * @param terrain Terrain from BattlePane ChoiceBox
      */
-    public static void simulate(BattlePane.BattleBox battleBox, Terrain terrain) {
+    public static void simulate(Terrain terrain) {
         if (battle.getArmyOne().getName().equals("") || battle.getArmyTwo().getName().equals("")) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Simulate");
@@ -263,14 +262,13 @@ public class Controller {
         else {
             simRunning = true;
             battleBox.midBattle();
-            SimulationThread sim = new SimulationThread(battle, terrain, (int)speed.getValue());
+            new SimulationThread(battle, terrain, (int)speed.getValue());
         }
     }
 
     public static void simWinner(Army army) {
         simRunning = false;
         previousWinner = army;
-        battleBox.postBattle();
         if (previousWinner == null) {
             drawPreBattle();
         }
@@ -280,14 +278,17 @@ public class Controller {
     }
 
     /**
-     * Handles the cancel button in BattlePane.
-     *
-     * @param battleBox BattleBox from BattlePane
+     * Handles the back button in BattlePane.
      */
-    public static void cancelSimulation(BattlePane.BattleBox battleBox) {
+    public static void backSimulation() {
         clearBattle();
         simRunning = false;
-        battleBox.preBattle();
+        if (previousWinner == null) {
+            battleBox.preBattle();
+        }
+        else {
+            battleBox.postBattle();
+        }
     }
 
     /**

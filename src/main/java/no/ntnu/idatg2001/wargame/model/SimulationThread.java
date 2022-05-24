@@ -34,7 +34,7 @@ public class SimulationThread {
 
         simTask = new Task<Integer>() {
             @Override protected Integer call() throws Exception {
-                long waitTime = 5000 / speed;
+                long waitTime = 1000 / speed;
                 int iterations;
                 for (iterations = 0; iterations < 100000; iterations++) {
                     if (isCancelled()) {
@@ -47,7 +47,6 @@ public class SimulationThread {
                         Thread.sleep(waitTime);
                     } catch (InterruptedException interrupted) {
                         if (isCancelled()) {
-                            System.out.println("hm");
                             break;
                         }
                     }
@@ -75,6 +74,8 @@ public class SimulationThread {
 
                 army1.removeDead();
                 army2.removeDead();
+
+                draw();
             }
             else {
                 simTask.cancel();
@@ -92,7 +93,6 @@ public class SimulationThread {
         else {
             simTask.cancel();
         }
-        draw();
     }
 
     private void draw() {
