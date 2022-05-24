@@ -19,7 +19,19 @@
 
 
 ## Innledning
+Wargame Prosjektet er en del av vurdedingen for
+[IDATG2001 Programmering 2](https://www.ntnu.no/studier/emner/IDATG2001#tab=omEmnet),
+som består av en mappevurdering med flere deloppgaver.
+I prosjektet skal det utvikles et program for å simulere slag mellom armeer av ulike typer enheter.
+Programmet skal ha et brukergrensesnitt og kunne lagre flere armeer.
 
+Prosjektet skal bruke enkelte praksiser fra emnet. Dette inkluderer;
+* Maven Framework
+* javaFX
+* Lokal og global versjonskontroll
+* Enhetstesting
+* Unntakshåntering
+* Design-mønstere
 
 ## Kravspesifikasjon
 Oppgaven var gitt ut i 3 deler utover semesteret.
