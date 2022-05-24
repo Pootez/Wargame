@@ -8,6 +8,8 @@
    2. Del 2
    3. Del 3
 3. Design
+   1. Model
+   2. View
 4. Implementasjon
 5. Prosess
 6. Refleksjon
@@ -149,10 +151,92 @@ basert på [modena.css](https://gist.github.com/maxd/63691840fc372f22f470).
 ---
 
 ## Design
+### Model
+Modellen fra del 1 og 2 hadde en ganske klar struktur.
+Det forrige semesteret omhandlet registere av objekter.
+Det som var nytt for dette semesteret for klasse-strukturen var polymorfi, abstrakte klasser og
+grensesnitt.
+Den abstrakte Unit klassen er et eksempel på Template design-mønsteret,
+der 
+Strukturen ble senere mer komplisert ved implementasjonen av SimulationThread.
 
+![](images/modelDiagram.png)
+
+### View
+Ved implementeringen av GUI valgte jeg å bruke design-mønsteret "model-view-controller",
+der du separerer selve modellen fra applikasjonen.
+Controller klassen håndterer interaksjon med selve applikasjonen.
+
+![](images/fileStructure.png)
+
+Strukturen av programmet reflekterer bruksområdet til modellen.
+MainWindow bytter mellom to klasser som utvider BorderPane
+Battle klassen blir brukt i arbeidsområdet BattlePane der du simulerer.
+![](images/mainWire.png)
+
+FileHandler blir brukt til å liste av, åpne og slette filene av armeer.
+Her brukes ArmiesPane.
+Controller klassen holder på hoved-scenen til applikasjonen og bytter mellom dem.
+![](images/armiesWire.png)
+
+Army og Unit klassen blir hovedsakelig samhandlet med i ArmyWindow.
+Siden det oppfordres til å lages flere filer for armeer,
+kan man åpne flere armeer i flere vinduer.
+![](images/armyWire.png)
+
+
+![](images/viewOnlyDiagram.png)
 
 ## Implementasjon
 
+For at ArmyWindow skal kunne brukes samtidig som hovedvinduet med simuleringen,
+brukes design-mønsteret Observer i Controller.
+Enkelte lister som må oppdateres når en armé blir dannet, redigert eller slettet,
+blir lagt til i Controller. Når man lagrer en armé, oppdateres listene.
+
+    // In ArmyWindow
+    CustomButton saveBtn = new CustomButton("Save", event -> save());
+
+    private void save() {
+        ...
+        Controller.updateArmyList();
+        ...
+    }
+
+    // In ArmiesPane
+    ListView<String> armyList = new ListView<>();
+    Controller.setArmyList(armyList);
+    Controller.updateArmyList();
+
+
+
+Et eksempel på hvordan "model-view-controller" virker er implementasjonen av klassen CustomButton,
+som setter opp en Button med navn og framstilling, og refererer til en metode i Controller.
+
+    public CustomButton (String name, EventHandler event) {
+        super(name);
+        this.setOnAction(event);
+        this.setFont(Font.font(20));
+        this.setPadding(new Insets(5,30,5,30));
+    }
+
+    // In BattlePane
+    CustomButton simulateBtn = new CustomButton("Simulate", event -> Controller.simulate());
+
+Controller klassen ble gjort statisk for at klassene i View tilgang til statiske metoder og
+fordi det bare skal være én instans.
+Derfor brukes ikke controller til å holde på armeene i et ArmyWindow,
+slik at man kan åpne flere armeer om gangen, seperat fra hovedapplikasjonen.
+
+    public static void viewArmy() {
+    ...
+    try {
+        new ArmyWindow(fileName).start(new Stage());
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    ...
+    }
 
 ## Prosess
 Gjennom prosjektet har jeg jobbet i lengre intervaller i nærheten av innleveringsfrist,
@@ -161,6 +245,7 @@ Mot del 3 tok jeg i bruk
 [GitLabs kanban-tavle](https://git.gvk.idi.ntnu.no/course/idatg2001/idatg2001-2022-ws/sondesp/wargame3/-/boards).
 Dette var praktisk for å holde styr på hvilke ting som måtte bli gjort, og hvilke som var fokusert.
 Regelmessige commits gjorde også at jeg oftere fokuserte på en implementering om gangen.
+![](images/kanban.png)
 
 Emnets forelesninger var den viktigste ressursen, selv om jeg oftest ikke møtte opp fysisk.
 Presentasjonene forklarte bra bort konseptene og om jeg hadde spørsmål om implementeringen,
@@ -172,7 +257,9 @@ Enkelte nettsider var praktiske i dette spesifikke prosjektet;
 
 ## Refleksjon
 ### Design
-
+Modellens design er synlig bedre enn resten av applikasjonen,
+men jeg har lært mye om strukturering og design-mønstere for å bygge applikasjoner.
+Om jeg hadde begynt fra begynnelsen kan jeg utviklet en bedre strukturert applikasjon.
 
 ### Implementasjon
 I det andre utviklingsprosjektet vårt dette semesteret, der vi var 3 på gruppa,
@@ -218,6 +305,14 @@ veldig oversiktlig strukturert. Nødvendig informasjon var altså lett tilgjenge
 Som mål til neste semester skal jeg uansett prøve å møte opp mer for en mer utfylt læringsopplevelse.
 
 ### Resultat
-
+Applikasjonen utseende og funksjonalitet er fungerende,
+om jeg hadde lagd den ijen hadde jeg forbedret strukturen mellom View og Controller.
+Selv om jeg har bedre kontroll på javaFX nå, hadde SceneBuilder vært et mer praktisk
+alternativ.
 
 ## Konklusjon
+Gjennom prosjektet har jeg lært å bruke Maven, javaFX og versjonshåndtering med Git for å utvikle
+programmer.
+Jeg forstår bedre konseptene og design-mønstrene bak en applikasjon.
+Videre i mine personlige prosjekter kommer jeg til å bruke git for å holde styr på
+nye utviklings-prosjekter.
