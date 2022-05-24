@@ -321,6 +321,9 @@ public class Controller {
         }
     }
 
+    /**
+     * Draws the background based on the selected ChoiceBox terrain
+     */
     public static void drawBackground() {
         Terrain terrain = choiceBox == null ?
                 Terrain.NONE :
