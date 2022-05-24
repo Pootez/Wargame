@@ -186,6 +186,15 @@ public class Controller {
     }
 
     /**
+     * Method for clearing the selected armies in the BattlePane.
+     */
+    private static void clearMainViewSelection() {
+        for (ListView list : mainListViews) {
+            list.getSelectionModel().clearSelection();
+        }
+    }
+
+    /**
      * Updates armies property of the application.
      */
     private static void readArmies() {
@@ -262,6 +271,7 @@ public class Controller {
             alert.showAndWait();
         }
         else {
+            clearMainViewSelection();
             simRunning = true;
             battleBox.midBattle();
             new SimulationThread(battle,
@@ -290,6 +300,7 @@ public class Controller {
      * Handles the back button in BattlePane.
      */
     public static void backSimulation() {
+        clearMainViewSelection();
         clearBattle();
         simRunning = false;
         if (previousWinner == null) {
