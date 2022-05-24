@@ -179,31 +179,7 @@ public abstract class Unit {
         return x;
     }
 
-    public void setX(float x) {
-        this.x = x;
-    }
-
     public double getY() {
         return y;
-    }
-
-    public void setY(float y) {
-        this.y = y;
-    }
-
-    public int getCooldown() {
-        return cooldown;
-    }
-
-    public void setCooldown(int cooldown) {
-        this.cooldown = cooldown;
-    }
-
-    public int getLastAttack() {
-        return lastAttack;
-    }
-
-    public void setLastAttack(int lastAttack) {
-        this.lastAttack = lastAttack;
     }
 }
