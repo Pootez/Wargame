@@ -13,6 +13,7 @@ public class RangedUnit extends Unit {
 
     private int attackBonus = 3;
     private int resistBonus = 6;
+    private int range;
 
     /**
      * @param name Short descriptive name. Ex: "Archer", "Swordsman"
@@ -32,6 +33,7 @@ public class RangedUnit extends Unit {
         super(name, health);
         attack = 15;
         armor = 8;
+        range = 100;
     }
 
     /**

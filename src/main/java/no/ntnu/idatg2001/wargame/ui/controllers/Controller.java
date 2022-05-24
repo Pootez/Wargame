@@ -199,8 +199,10 @@ public class Controller {
             Army temp = FileHandler.readArmyCSV(saveDir + "/" + fileName + ".csv");
 
             if (armyNum == 1) {
+                temp.randomPositions(0,0,100,300);
                 battle.setArmyOne(temp);
             } else if (armyNum == 2) {
+                temp.randomPositions(300,0,400,300);
                 battle.setArmyTwo(temp);
             } else {
                 throw new IllegalArgumentException("Invalid army number");
@@ -259,10 +261,9 @@ public class Controller {
             alert.showAndWait();
         }
         else {
-            SimulationThread sim = new SimulationThread(battle, terrain, (int)speed.getValue());
             simRunning = true;
             battleBox.midBattle();
-            sim.run();
+            SimulationThread sim = new SimulationThread(battle, terrain, (int)speed.getValue());
         }
     }
 
@@ -346,6 +347,10 @@ public class Controller {
      */
     public static void setGc(GraphicsContext gc) {
         Controller.gc = gc;
+    }
+
+    public static GraphicsContext getGc() {
+        return gc;
     }
 
     /**

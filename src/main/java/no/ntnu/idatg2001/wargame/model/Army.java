@@ -3,12 +3,13 @@ package no.ntnu.idatg2001.wargame.model;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * Class representing an army of units.
  *
  * @author sondesp
- * @version 2022-05-23
+ * @version 2022-05-24
  * @since 2022-02-24
  */
 
@@ -67,6 +68,12 @@ public class Army {
         }
     }
 
+    public void randomPositions(int x1, int y1, int x2, int y2) {
+        for (Unit unit : units) {
+            unit.randomPosition(x1, y1, x2, y2);
+        }
+    }
+
     public void attack(Army army) {
         for (Unit unit : units) {
             unit.attack(army);
@@ -90,6 +97,10 @@ public class Army {
      * @return True if unit was successfully removed
      */
     public boolean remove(Unit unit) {return units.remove(unit);}
+
+    public void removeDead() {
+        units = units.stream().filter(obj -> obj.getHealth() > 0).collect(Collectors.toList());
+    }
 
     /**
      * @return True if list is not empty

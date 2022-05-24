@@ -1,6 +1,7 @@
 package no.ntnu.idatg2001.wargame.model;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Superclass for units, given their name and statistics.
@@ -41,8 +42,8 @@ public abstract class Unit {
         this.health = health;
         this.attack = attack;
         this.armor = armor;
-        range = 5;
-        speed = 1;
+        range = 20;
+        speed = 5;
         cooldown = 20;
     }
 
@@ -57,8 +58,8 @@ public abstract class Unit {
 
         this.name = name;
         this.health = health;
-        range = 5;
-        speed = 1;
+        range = 20;
+        speed = 5;
         cooldown = 20;
     }
 
@@ -120,26 +121,28 @@ public abstract class Unit {
     public void attack(Unit opponent) {
         int hp = opponent.getHealth() - attack - getAttackBonus() + opponent.getArmor() + opponent.getResistBonus();
         opponent.attacked();
-        if (hp < opponent.getHealth()) {opponent.setHealth(hp);}
+        if (hp < opponent.getHealth()) {
+            opponent.setHealth(hp);
+        }
     }
 
     public void attack(Army army) {
         if (army.hasUnits()) {
             if (target == null || target.getHealth() <= 0) {
                 List<Unit> enemyUnits = army.getUnits();
-                Unit target = findTarget(enemyUnits);
+                target = findTarget(enemyUnits);
             }
-            if (distToUnit(target) <= range) {
-                if (lastAttack == -1 || lastAttack >= cooldown) {
-                    attack(target);
-                    lastAttack = 00;
+            if (target != null) {
+                if (distToUnit(target) <= range) {
+                    if (lastAttack == -1 || lastAttack >= cooldown) {
+                        attack(target);
+                        lastAttack = 0;
+                    } else {
+                        lastAttack++;
+                    }
+                } else {
+                    moveTowardsUnit(target);
                 }
-                else {
-                    lastAttack++;
-                }
-            }
-            else {
-                moveTowardsUnit(target);
             }
         }
     }
@@ -149,13 +152,27 @@ public abstract class Unit {
     }
 
     private Unit findTarget(List<Unit> units) {
-        return units.stream().sorted((a, b) -> Double.compare(distToUnit(a),distToUnit(b))).toList().get(0);
+        List<Unit> notDead = units.stream().filter(obj -> obj.getHealth() > 0).collect(Collectors.toList());
+        if (notDead.size() == 0) {
+            return null;
+        }
+        List<Unit> close = notDead.stream().sorted((a, b) -> Double.compare(distToUnit(a),distToUnit(b)))
+                .collect(Collectors.toList());
+        return close.get(0);
     }
 
     private void moveTowardsUnit(Unit unit) {
         double ang = Math.atan2(unit.getY() - y, unit.getX() - x);
         x += Math.cos(ang) * speed;
         y += Math.sin(ang) * speed;
+    }
+
+    public void randomPosition(int x1, int y1, int x2, int y2) {
+        double width = Math.abs(x2 - x1);
+        double height = Math.abs(y2 - y1);
+
+        x = Math.random() * width + Math.min(x1, x2);
+        y = Math.random() * height + Math.min(y1, y2);
     }
 
     public double getX() {
